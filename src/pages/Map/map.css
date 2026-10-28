@@ -228,3 +228,6 @@
 .mapv { border-radius: var(--r-card); overflow: hidden; border-color: transparent; box-shadow: var(--shadow-1); }
 .mapgrid__side > * { border-radius: var(--r-card); overflow: hidden; }
 .mk__label, .mk__tag, .mk__badge { border-radius: var(--r-xs); }
+/* Same title as every page header (size and font follow .page-head__title) */
+:root .mappage__title { font-size: var(--fs-3xl); font-family: var(--font-display); line-height: 1.05; }
+@media (max-width: 640px) { :root .mappage__title { font-size: var(--fs-2xl); } }

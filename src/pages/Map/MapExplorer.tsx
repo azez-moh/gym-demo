@@ -296,7 +296,7 @@ export function MapExplorer() {
           </ol>
         </nav>
       </div>
-      <h1 className="mappage__title">{title}</h1>
+      <h1 className="page-head__title mappage__title">{title}</h1>
 
       <div className="mapgrid">
         <aside className="mapgrid__side" aria-label={listTitle}>

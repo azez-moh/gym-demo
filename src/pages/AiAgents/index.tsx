@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertOctagon, AlertTriangle, Eye, EyeOff, Unplug } from 'lucide-react';
-import { Badge, BarChart, Card, ConfirmDialog, InfoTip, Select, Segmented, Toggle } from '../../components';
+import { Badge, BarChart, Card, ConfirmDialog, InfoTip, PageHeader, Select, Segmented, Toggle } from '../../components';
 import { useI18n } from '../../i18n';
 import { useScope } from '../../layout/filters';
 import { useChartTokens } from '../../theme/theme';
@@ -121,10 +121,7 @@ export default function AiAgentsPage() {
     <div className="page ag-wall">
       {/* Title line and one line of run summary (BMS-13) */}
       <header className="ag-head">
-        <div className="ag-head__line">
-          <h1 className="ag-head__title">{t('nav.aiAgents')}</h1>
-          <span className="ag-head__where">{building}</span>
-        </div>
+        <PageHeader eyebrow={building} title={t('nav.aiAgents')} />
         <div className="ag-run" aria-label={t('aiAgents.runLabel')}>
           <span className="ag-run__chip num">{t('aiAgents.running', { n: fmtNumber(running.length) })}</span>
           <span className="ag-run__chip">{mayAct.length ? t('aiAgents.mayAct', { n: fmtNumber(mayAct.length) }) : t('aiAgents.noneMayAct')}</span>

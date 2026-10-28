@@ -107,3 +107,4 @@ a.vo-alert:hover .vo-alert__title { text-decoration: underline; text-underline-o
   .shell:has(.vo-wall) .sidenav__link { height: clamp(24px, calc((100dvh - var(--topbar-h) - 210px) / 25), 36px); }
   .shell:has(.vo-wall) .sidenav__link.active::before { inset-block: 4px; }
 }
+.vo-head__titlewrap { display: inline-flex; align-items: center; gap: 8px; }

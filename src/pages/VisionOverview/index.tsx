@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Activity, AlertOctagon, AlertTriangle, ArrowRight, BarChart3, Cctv, Dumbbell, Flame, Gauge, Grid3x3, Timer, Users } from 'lucide-react';
-import { Badge, Card, EmptyState, InfoTip, KpiTile } from '../../components';
+import { Badge, Card, EmptyState, InfoTip, KpiTile, PageHeader } from '../../components';
 import { useI18n } from '../../i18n';
 import { useScope } from '../../layout/filters';
 import { useAccess } from '../../layout/access';
@@ -100,11 +100,7 @@ export default function VisionOverviewPage() {
 
   return (
     <div className="page vo-wall">
-      <header className="vo-head">
-        <h1 className="vo-head__title">{t('visionOverview.title')}</h1>
-        <InfoTip text={t('visionOverview.about')} />
-        <span className="vo-head__where">{gym}</span>
-      </header>
+      <PageHeader eyebrow={gym} title={<span className="vo-head__titlewrap">{t('visionOverview.title')}<InfoTip text={t('visionOverview.about')} /></span>} />
 
       <div className="grid-kpi vo-kpis">
         <KpiTile icon={Users} live label={t('visionOverview.kpi.people')} info={t('visionOverview.kpi.peopleInfo')}
