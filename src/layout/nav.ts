@@ -1,6 +1,6 @@
 import {
   Activity, AirVent, BarChart3, Bot, Building2, Camera, Cctv, Cpu, Dumbbell, FileBarChart, Flame, Gauge, Grid3x3, LayoutDashboard,
-  Library, Lightbulb, Eye, Home, Cog, ListVideo, Map as MapIcon, MessageCircle, PlugZap, Radar, ScanEye, Settings, Settings2, SlidersHorizontal, Store, type LucideIcon,
+  Library, Lightbulb, Eye, Waves, Bath, ScrollText, ShieldCheck, Images, Home, Cog, ListVideo, Map as MapIcon, MessageCircle, PlugZap, Radar, ScanEye, Settings, Settings2, SlidersHorizontal, Store, type LucideIcon,
 } from 'lucide-react';
 
 /**
@@ -55,15 +55,20 @@ export const VISION_PAGES: PageDef[] = [
   { id: 'monitor', key: 'monitor', folder: 'Monitor', group: 'vision', icon: ScanEye },
   { id: 'live-floor', key: 'liveFloor', folder: 'LiveFloor', group: 'vision', icon: Grid3x3 },
   { id: 'heatmap', key: 'heatmap', folder: 'Heatmap', group: 'vision', icon: Flame },
+  { id: 'pool', key: 'pool', folder: 'Pool', group: 'vision', icon: Waves },
+  { id: 'jacuzzis', key: 'jacuzzis', folder: 'Jacuzzis', group: 'vision', icon: Bath },
   { id: 'cameras', key: 'cameras', folder: 'Cameras', group: 'vision', icon: Cctv },
   { id: 'camera-list', key: 'cameraList', folder: 'CameraList', group: 'vision', icon: ListVideo },
   { id: 'zones', key: 'zones', folder: 'Zones', group: 'vision', icon: Radar },
   { id: 'zones-live', key: 'zonesLive', folder: 'ZonesLive', group: 'vision', icon: Activity },
+  { id: 'policies', key: 'policies', folder: 'Policies', group: 'vision', icon: ShieldCheck },
   { id: 'reports', key: 'reports', folder: 'Reports', group: 'vision', icon: FileBarChart },
   { id: 'machine-library', key: 'machineLibrary', folder: 'MachineLibrary', group: 'vision', icon: Library },
   { id: 'machines', key: 'machines', folder: 'Machines', group: 'vision', icon: Dumbbell },
   { id: 'usage-report', key: 'usageReport', folder: 'UsageReport', group: 'vision', icon: BarChart3 },
   { id: 'library-management', key: 'libraryManagement', folder: 'LibraryManagement', group: 'vision', icon: Cpu },
+  { id: 'snapshot-history', key: 'snapshotHistory', folder: 'SnapshotHistory', group: 'vision', icon: Images },
+  { id: 'activity-log', key: 'activityLog', folder: 'ActivityLog', group: 'vision', icon: ScrollText },
 ];
 
 /** Top centre menu at network level (All branches). */
