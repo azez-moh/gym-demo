@@ -23,6 +23,23 @@ export function stateAt(m: Machine, club: Club, date: string, minute: number): {
   return { state, sinceMin: Math.round(since) };
 }
 
+/** Sessions started on a date before a minute (replay). */
+export function sessionsUpTo(m: Machine, club: Club, date: string, minute: number): number {
+  let n = 0;
+  for (const s of machineSessions(m, club, date)) { if (s.start >= minute) break; n++; }
+  return n;
+}
+
+/** Minutes one machine has been in use on a date, from opening up to a minute (replay). */
+export function usedUpTo(m: Machine, club: Club, date: string, minute: number): number {
+  let used = 0;
+  for (const s of machineSessions(m, club, date)) {
+    if (s.start >= minute) break;
+    used += Math.min(s.end, minute) - s.start;
+  }
+  return used;
+}
+
 /** Minutes of use of one machine per hour of a date, up to a minute. */
 export function hourlyUse(m: Machine, club: Club, date: string, upto: number): number[] {
   const out = new Array(24).fill(0);

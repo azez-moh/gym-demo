@@ -196,7 +196,7 @@ const MachineNode = memo(function MachineNode({ m, selected, hovered, showFootpr
     <group position={[m.x, dragging ? 0.06 : 0, m.z]} rotation={[0, (m.rot * Math.PI) / 180, 0]}>
       <MachineModel type={m.type} accent={m.accent} frame={pal.frame} soft={pal.soft} metal={pal.metal} screen={pal.screen}
         person={m.person} personColor={theme === 'dark' ? '#e9ecea' : '#4a5250'} glow={m.glow} plate={m.plate} plateOpacity={m.plateOpacity}
-        accentGlow={m.accentGlow} selected={selected} outline={m.ring ?? (hovered ? c.label : c.outline)} showFootprint={showFootprints || !!m.ring || hovered || editing}
+        accentGlow={m.accentGlow} animate selected={selected} outline={m.ring ?? (hovered ? c.label : c.outline)} showFootprint={showFootprints || !!m.ring || hovered || editing}
         showClearance={showFootprints} castShadow
         onPointerDown={(e) => onDown(m.id, e)} onClick={(e) => onClick(m.id, e)}
         onPointerOver={(e) => onOver(m.id, e)} onPointerOut={() => onOut(m.id)} />

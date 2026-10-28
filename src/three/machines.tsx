@@ -1,5 +1,6 @@
-import { memo } from 'react';
-import type { ThreeEvent } from '@react-three/fiber';
+import { memo, useEffect, useMemo, useRef } from 'react';
+import * as THREE from 'three';
+import { useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import type { MachineType } from '../data/types';
 import { MACHINE_FOOTPRINT } from '../data/library';
 import {
@@ -50,6 +51,8 @@ export interface MachineModelProps {
   plateOpacity?: number;
   /** Emissive strength on accent parts (in-use glow). */
   accentGlow?: number;
+  /** Animate the person, glow and plate between states (springs). Only inside a live Canvas. */
+  animate?: boolean;
   castShadow?: boolean;
   onClick?: (e: ThreeEvent<MouseEvent>) => void;
   onPointerOver?: (e: ThreeEvent<PointerEvent>) => void;
@@ -66,7 +69,7 @@ export function machinePalette(theme: 'light' | 'dark'): Omit<MachineColors, 'ac
 
 function MachineModelImpl({
   type, accent = '#7c3aed', frame = '#3a3450', soft = '#2a2536', metal, screen = '#0e0b18', showFootprint, showClearance, clearance = 0.6,
-  selected, outline = '#8f9a97', person, personColor = '#e6e9e8', glow, plate, plateOpacity = 0.14, accentGlow = 0, castShadow = true,
+  selected, outline = '#8f9a97', person, personColor = '#e6e9e8', glow, plate, plateOpacity = 0.14, accentGlow = 0, castShadow = true, animate = false,
   onClick, onPointerOver, onPointerOut, onPointerDown,
 }: MachineModelProps) {
   const fp = MACHINE_FOOTPRINT[type] ?? { l: 1, w: 1, h: 1 };
@@ -88,18 +91,28 @@ function MachineModelImpl({
               : matteMaterial(colors[role]);
         return <mesh key={role} geometry={g} material={mat} castShadow={castShadow} receiveShadow />;
       })}
-      {person && spot && (
-        <mesh geometry={figureGeometry(spot.pose)} material={matteMaterial(personColor, { roughness: 0.9 })} position={spot.p} castShadow={castShadow} />
-      )}
-      {glow && (
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.004, 0]} material={flatMaterial(glow, 0.55, true)} renderOrder={1}>
-          <planeGeometry args={[w + 1.4, l + 1.4]} />
-        </mesh>
-      )}
-      {plate && (
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.003, 0]} material={flatMaterial(plate, plateOpacity)} renderOrder={1}>
-          <planeGeometry args={[w, l]} />
-        </mesh>
+      {animate ? (
+        <>
+          {spot && <SpringPerson show={!!person} geometry={figureGeometry(spot.pose)} color={personColor} position={spot.p} castShadow={castShadow} />}
+          <FadePlane color={glow} opacity={0.55} glow size={[w + 1.4, l + 1.4]} y={0.004} />
+          <FadePlane color={plate} opacity={plateOpacity} size={[w, l]} y={0.003} />
+        </>
+      ) : (
+        <>
+          {person && spot && (
+            <mesh geometry={figureGeometry(spot.pose)} material={matteMaterial(personColor, { roughness: 0.9 })} position={spot.p} castShadow={castShadow} />
+          )}
+          {glow && (
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.004, 0]} material={flatMaterial(glow, 0.55, true)} renderOrder={1}>
+              <planeGeometry args={[w + 1.4, l + 1.4]} />
+            </mesh>
+          )}
+          {plate && (
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.003, 0]} material={flatMaterial(plate, plateOpacity)} renderOrder={1}>
+              <planeGeometry args={[w, l]} />
+            </mesh>
+          )}
+        </>
       )}
       {(showFootprint || selected) && (
         <lineLoop geometry={rectGeometry(l, w)} material={lineMaterial(selected ? accent : outline)} />
@@ -109,6 +122,73 @@ function MachineModelImpl({
         <lineSegments geometry={dashedRectGeometry(l + 2 * clearance, w + 2 * clearance)} material={lineMaterial(outline, 0.75)} />
       )}
     </group>
+  );
+}
+
+// ---------- state transitions (Live Floor) ----------
+// A damped spring (stiffness 210, damping ratio 0.68): a member steps on with a small settle, steps off quickly.
+const K = 210;
+const C = 2 * 0.68 * Math.sqrt(K);
+
+/** The figure on a machine grows in from the floor on a spring and sinks away when the session ends. */
+function SpringPerson({ show, geometry, color, position, castShadow }: {
+  show: boolean; geometry: THREE.BufferGeometry; color: string; position: [number, number, number]; castShadow: boolean;
+}) {
+  const ref = useRef<THREE.Group>(null);
+  const st = useRef({ x: show ? 1 : 0, v: 0 });
+  const { invalidate } = useThree();
+  const material = useMemo(() => matteMaterial(color, { roughness: 0.9 }), [color]);
+  useEffect(() => { invalidate(); }, [show, invalidate]);
+  useFrame((_, delta) => {
+    const g = ref.current;
+    if (!g) return;
+    const s = st.current;
+    const target = show ? 1 : 0;
+    const dt = Math.min(delta, 1 / 30);
+    const a = -K * (s.x - target) - C * s.v;
+    s.v += a * dt;
+    s.x += s.v * dt;
+    const settled = Math.abs(s.x - target) < 0.002 && Math.abs(s.v) < 0.01;
+    if (settled) { s.x = target; s.v = 0; }
+    const k = Math.max(0, s.x);
+    g.visible = k > 0.01;
+    g.scale.set(0.85 + 0.15 * k, k, 0.85 + 0.15 * k);
+    if (!settled) invalidate();
+  });
+  return (
+    <group ref={ref} position={position} visible={show}>
+      <mesh geometry={geometry} material={material} castShadow={castShadow} />
+    </group>
+  );
+}
+
+/** Floor tint that cross-fades its colour and opacity when the state or the reading changes. */
+function FadePlane({ color, opacity, glow = false, size, y }: {
+  color?: string; opacity: number; glow?: boolean; size: [number, number]; y: number;
+}) {
+  const { invalidate } = useThree();
+  const material = useMemo(() => {
+    const m = flatMaterial(color ?? '#ffffff', 1, glow).clone();
+    m.opacity = color ? opacity : 0;
+    return m;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [glow]);
+  useEffect(() => () => material.dispose(), [material]);
+  const target = useRef(new THREE.Color(color ?? '#ffffff'));
+  useEffect(() => { if (color) target.current.set(color); invalidate(); }, [color, opacity, invalidate]);
+  useFrame((_, delta) => {
+    const k = 1 - Math.exp(-Math.min(delta, 1 / 30) * 9);
+    const goal = color ? opacity : 0;
+    material.color.lerp(target.current, k);
+    material.opacity += (goal - material.opacity) * k;
+    const c = material.color, t = target.current;
+    const done = Math.abs(material.opacity - goal) < 0.003 && Math.abs(c.r - t.r) + Math.abs(c.g - t.g) + Math.abs(c.b - t.b) < 0.004;
+    if (done) { material.opacity = goal; c.copy(t); } else invalidate();
+  });
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, y, 0]} material={material} renderOrder={1}>
+      <planeGeometry args={size} />
+    </mesh>
   );
 }
 

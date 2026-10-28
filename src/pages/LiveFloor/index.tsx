@@ -12,7 +12,7 @@ import { useScope } from '../../layout/filters';
 import { useAccess } from '../../layout/access';
 import { useI18n } from '../../i18n';
 import { useTheme } from '../../theme/theme';
-import { FAMILY_ORDER, MAIN_CANVAS, locationOf, hourlyUse, openingMinute, readCanvases, seqColor, stateAt, writeCanvases, type FloorCanvasDef, type Placement, type ShownState } from './model';
+import { FAMILY_ORDER, MAIN_CANVAS, locationOf, hourlyUse, openingMinute, sessionsUpTo, usedUpTo, readCanvases, seqColor, stateAt, writeCanvases, type FloorCanvasDef, type Placement, type ShownState } from './model';
 import type { FloorMachine } from './FloorScene';
 import { CamWindow } from './CamWindow';
 import './liveFloor.css';
@@ -113,11 +113,11 @@ export default function LiveFloorPage() {
     if (!playing) return;
     const id = window.setInterval(() => {
       setReplayMin((m) => {
-        const next = (m ?? openMin) + 6;
+        const next = (m ?? openMin) + 4;
         if (next >= nowMin) { setPlaying(false); return null; }
         return next;
       });
-    }, 110);
+    }, 70);
     return () => window.clearInterval(id);
   }, [playing, openMin, nowMin]);
 
@@ -156,6 +156,28 @@ export default function LiveFloorPage() {
     }
     return new Map([...acc].map(([k, v]) => [k, v.open ? (v.used / v.open) * 100 : 0]));
   }, [rows, usage, noReading]);
+  // Replay: utilisation builds up from opening to the replay minute (today's period), so the floor visibly fills in.
+  const replayUtil = useMemo(() => {
+    if (replayMin == null || prefs.period !== 'today' || prefs.colour === 'state') return null;
+    const span = Math.max(1, replayMin - openMin);
+    const out = new Map<string, { pct: number; used: number }>();
+    for (const m of rows) {
+      const used = m.enabled ? usedUpTo(m, club, today, replayMin) : 0;
+      out.set(m.id, { pct: (used / span) * 100, used });
+    }
+    return out;
+  }, [replayMin, prefs.period, prefs.colour, openMin, rows, club, today]);
+  const replayFamily = useMemo(() => {
+    if (!replayUtil) return null;
+    const acc = new Map<MachineType, { pct: number; n: number }>();
+    for (const m of rows) {
+      if (noReading(m)) continue;
+      const a = acc.get(m.type) ?? { pct: 0, n: 0 };
+      a.pct += replayUtil.get(m.id)?.pct ?? 0; a.n += 1;
+      acc.set(m.type, a);
+    }
+    return new Map([...acc].map(([k, v]) => [k, v.n ? v.pct / v.n : 0]));
+  }, [replayUtil, rows, noReading]);
   const maxUtil = useMemo(() => {
     if (prefs.colour === 'family') return Math.max(1, ...familyUtil.values());
     return Math.max(1, ...rows.filter((m) => !noReading(m)).map((m) => usage.get(m.id)?.utilisationPct ?? 0));
@@ -239,14 +261,19 @@ export default function LiveFloorPage() {
       if (s.state === 'cooling') return { ...base, accent: st.cooling, ring: st.cooling, plate: st.cooling, plateOpacity: 0.12, tip };
       return { ...base, tip };
     }
-    if (noReading(m)) return { ...base, hatch: chart.axis, tip: t('liveFloor.card.noReading') };
+    // in every colour mode the figures follow the moment shown (live or replay), so moving the slider is visible
+    const busy = preview || s.state === 'inUse';
+    if (noReading(m)) return { ...base, person: busy, hatch: chart.axis, tip: t('liveFloor.card.noReading') };
     const u = usage.get(m.id);
-    const v = prefs.colour === 'family' ? (familyUtil.get(m.type) ?? 0) : (u?.utilisationPct ?? 0);
-    const col = seqColor(chart.seq.slice(2), v / maxUtil);
+    const ru = replayUtil?.get(m.id);
+    const v = prefs.colour === 'family'
+      ? (replayFamily?.get(m.type) ?? familyUtil.get(m.type) ?? 0)
+      : (ru ? ru.pct : (u?.utilisationPct ?? 0));
+    const col = seqColor(chart.seq.slice(2), Math.min(1, v / maxUtil));
     const tip = prefs.colour === 'family'
       ? `${libName(m.type)} · ${fmtPercent(v, 1)}`
       : t('liveFloor.card.usageLine', { pct: fmtPercent(v, 1), n: fmtNumber(u?.sessions ?? 0) });
-    return { ...base, accent: col, plate: col, plateOpacity: 0.55, tip, accentGlow: 0.15 };
+    return { ...base, person: busy, accent: col, plate: col, plateOpacity: 0.55, tip, accentGlow: busy ? 0.35 : 0.15 };
   }
 
   const counts = useMemo(() => {
@@ -254,6 +281,16 @@ export default function LiveFloorPage() {
     for (const m of placed) c[states[m.id].state]++;
     return c;
   }, [placed, states]);
+
+  // KPIs follow the slider: during a replay they show the floor at that moment, then return to live.
+  const shownKpi = useMemo(() => {
+    if (replayMin == null) return kpi;
+    const enabled = rows.filter((m) => m.enabled);
+    const used = enabled.reduce((a, m) => a + usedUpTo(m, club, today, replayMin), 0);
+    const sessions = enabled.reduce((a, m) => a + sessionsUpTo(m, club, today, replayMin), 0);
+    const open = Math.max(1, replayMin - openMin) * enabled.length;
+    return { ...kpi, inUse: counts.inUse, sessions, used, util: (used / open) * 100 };
+  }, [replayMin, kpi, rows, club, today, openMin, counts.inUse]);
 
   // ---------- edit layout (AV-15) ----------
   const [status, setStatus] = useState<string | null>(null);
@@ -403,11 +440,11 @@ export default function LiveFloorPage() {
       {header}
 
       <div className="grid-kpi">
-        <KpiTile live label={t('liveFloor.kpi.inUse')} value={fmtNumber(kpi.inUse)} icon={Users} info={t('liveFloor.kpi.inUseInfo')}
-          hint={t('liveFloor.kpi.inUseOf', { n: fmtNumber(kpi.total) })} />
-        <KpiTile label={t('liveFloor.kpi.sessions')} value={fmtNumber(kpi.sessions)} info={t('liveFloor.kpi.sessionsInfo')} />
-        <KpiTile label={t('liveFloor.kpi.used')} value={fmtDuration(kpi.used * 60)} info={t('liveFloor.kpi.usedInfo')} />
-        <KpiTile label={t('liveFloor.kpi.util')} value={fmtPercent(kpi.util, 1)} info={t('liveFloor.kpi.utilInfo')} />
+        <KpiTile live={replayMin == null} label={t('liveFloor.kpi.inUse')} value={fmtNumber(shownKpi.inUse)} icon={Users} info={t('liveFloor.kpi.inUseInfo')}
+          hint={t('liveFloor.kpi.inUseOf', { n: fmtNumber(shownKpi.total) })} />
+        <KpiTile label={t('liveFloor.kpi.sessions')} value={fmtNumber(shownKpi.sessions)} info={t('liveFloor.kpi.sessionsInfo')} />
+        <KpiTile label={t('liveFloor.kpi.used')} value={fmtDuration(shownKpi.used * 60)} info={t('liveFloor.kpi.usedInfo')} />
+        <KpiTile label={t('liveFloor.kpi.util')} value={fmtPercent(shownKpi.util, 1)} info={t('liveFloor.kpi.utilInfo')} />
       </div>
 
       <div className="lf-layout">
