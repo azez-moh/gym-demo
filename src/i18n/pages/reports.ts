@@ -10,6 +10,18 @@ export const en = {
   zonesN: '{n} zones',
   zonesN1: '1 zone',
   zonesN2: '2 zones',
+  period: { label: 'Period', today: 'Today', d7: '7 days', d30: '30 days' },
+  capacity: {
+    title: 'Usage vs available machines',
+    info: 'Average machines in use is the observed used time divided by the open time in the period, shown against the machines available of each type. Peak is the most machines of the type in use at the same minute.',
+    caveats: 'Available counts include every active machine, even one with no observations in the period. Time without a camera observation is not proof that a machine was idle. Past changes to the machine inventory are not reconstructed: today\'s machines are used for the whole period.',
+    col: { type: 'Machine type', available: 'Available', avg: 'Average in use', peak: 'Peak in use', util: 'Utilisation' },
+    bar: '{avg} of {n} machines in use on average, peak {peak}',
+    openHours: '{h} open hours in this period',
+    empty: 'No machines are set up in this gym yet.',
+    legendAvg: 'Average in use',
+    legendPeak: 'Peak',
+  },
 };
 
 export const ar: typeof en = {
@@ -23,4 +35,16 @@ export const ar: typeof en = {
   zonesN: '{n} مناطق',
   zonesN1: 'منطقة واحدة',
   zonesN2: 'منطقتان',
+  period: { label: 'الفترة', today: 'اليوم', d7: '7 أيام', d30: '30 يومًا' },
+  capacity: {
+    title: 'الاستخدام مقابل الأجهزة المتاحة',
+    info: 'متوسط الأجهزة المستخدمة هو وقت الاستخدام المرصود مقسومًا على ساعات العمل في الفترة، ويُعرض مقابل عدد الأجهزة المتاحة من كل نوع. والذروة هي أكبر عدد من أجهزة النوع استُخدم في الدقيقة نفسها.',
+    caveats: 'يشمل عدد الأجهزة المتاحة كل جهاز نشط حتى إن لم يُرصد خلال الفترة. والوقت الذي لم ترصده الكاميرات لا يعني بالضرورة أن الجهاز كان متوقفًا. ولا يُعاد بناء التغييرات السابقة في قائمة الأجهزة، بل تُحتسب أجهزة اليوم للفترة كاملة.',
+    col: { type: 'نوع الجهاز', available: 'المتاح', avg: 'متوسط المستخدم', peak: 'الذروة', util: 'نسبة الاستخدام' },
+    bar: '{avg} من {n} أجهزة مستخدمة في المتوسط، والذروة {peak}',
+    openHours: '{h} ساعة عمل في هذه الفترة',
+    empty: 'لا توجد أجهزة مضافة في هذه الصالة بعد.',
+    legendAvg: 'متوسط المستخدم',
+    legendPeak: 'الذروة',
+  },
 };

@@ -7,6 +7,7 @@ import type { MachineRow } from '../../data';
 import { ExpandButton, StatePill, TodayPanel, useTypeLabel } from '../Machines/shared/parts';
 import { useParam, useVisionClub } from '../Machines/shared/club';
 import '../Machines/shared/machines.css';
+import { CapacityCard } from './Capacity';
 
 /**
  * Reports: one row per machine with its current state (MR-20, MR-21). Rows are keyed by machine id, so a
@@ -51,6 +52,8 @@ export default function ReportsPage() {
         <p className="mr-intro">{t('reports.intro')}</p>
         <span className="mr-refreshed">{t('reports.refreshedAt', { time: fmtTime(shownAt) })}<InfoTip text={t('reports.liveInfo')} /></span>
       </div>
+
+      <CapacityCard />
 
       <Card pad="md" title={pick(club.nameEn, club.nameAr)} info={t('reports.tableInfo')}>
         {rows.length === 0 ? <EmptyState title={t('machines.empty')} /> : (

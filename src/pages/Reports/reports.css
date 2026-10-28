@@ -1,0 +1,15 @@
+/* Reports: usage vs available machines (owned by the Reports agent). */
+.rp-title { display: inline-flex; align-items: center; gap: var(--sp-2); }
+.rp-legend { display: flex; gap: var(--sp-4); flex-wrap: wrap; font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: var(--sp-3); }
+.rp-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.rp-sw { display: inline-block; width: 12px; height: 10px; }
+.rp-sw--avg { background: var(--chart-1); }
+.rp-sw--peak { background: var(--seq-2); }
+.rp-cap th.rp-num, .rp-cap td.rp-num { text-align: end; white-space: nowrap; }
+.rp-barcol { width: 38%; min-width: 180px; }
+.rp-bar { position: relative; display: block; height: 14px; background: var(--surface-3); border: 1px solid var(--border); overflow: hidden; }
+.rp-bar__peak, .rp-bar__avg { position: absolute; inset-block: 0; inset-inline-start: 0; }
+.rp-bar__peak { background: var(--seq-2); }
+.rp-bar__avg { background: var(--chart-1); transition: width 0.4s var(--ease); }
+.rp-bar__tick { position: absolute; inset-block: 0; width: 1px; background: var(--surface); opacity: 0.8; }
+@media (prefers-reduced-motion: reduce) { .rp-bar__avg { transition: none; } }

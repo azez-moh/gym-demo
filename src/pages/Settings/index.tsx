@@ -1,29 +1,56 @@
 import { lazy, Suspense, useMemo, useState, type ComponentType } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ExternalLink, Search } from 'lucide-react';
-import { Card, EmptyState, InfoTip, PageHeader, Segmented, TextField } from '../../components';
+import { Card, EmptyState, InfoTip, PageHeader, Segmented, Tabs, TextField } from '../../components';
 import { useI18n } from '../../i18n';
 import { useTheme } from '../../theme/theme';
 import { useDemo, focusClub } from '../../data';
 import { useScope } from '../../layout/filters';
 import { MORE_GROUPS, MORE_PAGES, morePageBySlug, type MorePage } from './morePages';
 import { MoreView } from './MoreViews';
+import { AiProvidersCard, BrandingCard, NotificationsCard, PrivacyCard, WorkingHoursCard } from './Sections';
 import './settings.css';
 
 /**
- * Settings (gear in the top bar): app-wide settings only. Appearance (theme, language), a pointer to Branch settings
- * (gym details, floor areas, operating hours, alert thresholds moved there) and the More pages directory.
+ * Settings (gear in the top bar), in four tabs: General (appearance, a pointer to Branch settings and the More pages
+ * directory), Working hours, Privacy and branding, AI and alerts. New sections keep their values in this browser only.
  */
+type SettingsTab = 'general' | 'hours' | 'branding' | 'ai';
+const TABS: SettingsTab[] = ['general', 'hours', 'branding', 'ai'];
+
 export default function SettingsPage() {
   const { t } = useI18n();
+  const [sp, setSp] = useSearchParams();
+  const raw = sp.get('tab') as SettingsTab | null;
+  const tab: SettingsTab = raw && TABS.includes(raw) ? raw : 'general';
+  const setTab = (v: SettingsTab) => setSp((prev) => {
+    const n = new URLSearchParams(prev);
+    if (v === 'general') n.delete('tab'); else n.set('tab', v);
+    return n;
+  }, { replace: true });
   return (
     <div className="page">
       <PageHeader title={<span className="st-title">{t('nav.settings')}<InfoTip text={t('settings.about')} /></span>} />
-      <div className="st-top">
-        <AppearanceCard />
-        <BranchCard />
+      <Tabs ariaLabel={t('settings.tabs.label')} value={tab} onChange={setTab}
+        tabs={TABS.map((id) => ({ id, label: t(`settings.tabs.${id}`) }))} />
+      <div role="tabpanel" aria-label={t(`settings.tabs.${tab}`)} className="st-panel">
+        {tab === 'general' && (<>
+          <div className="st-top">
+            <AppearanceCard />
+            <BranchCard />
+          </div>
+          <MorePagesCard />
+        </>)}
+        {tab === 'hours' && <WorkingHoursCard />}
+        {tab === 'branding' && (<>
+          <PrivacyCard />
+          <BrandingCard />
+        </>)}
+        {tab === 'ai' && (<>
+          <AiProvidersCard />
+          <NotificationsCard />
+        </>)}
       </div>
-      <MorePagesCard />
     </div>
   );
 }
