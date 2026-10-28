@@ -87,7 +87,6 @@ input, select, textarea, .select, .field__input { border-radius: var(--r-md); }
 :root[lang='ar'] .pw-lockup__name { font-family: 'Clash Display', system-ui, sans-serif; letter-spacing: 0; }
 .pw-lockup__by { font-family: 'Clash Display', system-ui, sans-serif; font-weight: 400; font-size: max(9px, calc(var(--lockup-h, 22px) * 0.42)); color: var(--text-faint); white-space: nowrap; }
 :root[lang='ar'] .pw-lockup__by { font-family: var(--font-body); font-size: max(11px, calc(var(--lockup-h, 22px) * 0.5)); }
-.topbar__brand .pw-lockup { --lockup-h: 17px; }
 @media (max-width: 640px) { .topbar__brand .pw-lockup__by { display: none; } }
 
 /* Background orbs, the system's only background treatment (fixed, behind everything, light theme only) */
@@ -102,3 +101,9 @@ input, select, textarea, .select, .field__input { border-radius: var(--r-md); }
   inset-block-start: -32vmax; inset-inline-start: -24vmax; background: radial-gradient(closest-side, rgba(124, 58, 237, 0.22), transparent);
 }
 body { background: var(--bg); isolation: isolate; }
+/* Phones: the top bar has no room for the full name next to the branch switcher, so it keeps the mark only
+   (the full lockup stays on the sign-in page). */
+@media (max-width: 640px) {
+  .topbar__brand .pw-lockup__text { display: none; }
+  .topbar__brand .pw-lockup__mark { height: 24px; }
+}

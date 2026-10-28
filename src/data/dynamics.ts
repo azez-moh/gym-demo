@@ -193,23 +193,23 @@ interface AlertTpl { level: Level; source: Alert['source']; en: string; ar: stri
 
 /** Live gym: the open items shown in the demo. */
 const LIVE_ALERTS: (AlertTpl & { agoMin: number })[] = [
-  { level: 'critical', source: 'hvac', en: 'Gym area 6.5 °C over its setpoint for 2 h 05 min', ar: 'صالة التمارين أعلى من درجة الضبط بمقدار 6.5 درجة منذ 2 س 5 د', areaEn: 'First floor, gym area', areaAr: 'الطابق الأول، صالة التمارين', agoMin: 125 },
+  { level: 'critical', source: 'hvac', en: 'Weights 6.5 °C over its setpoint for 2 h 05 min', ar: 'منطقة الأوزان أعلى من درجة الضبط بمقدار 6.5 درجة منذ 2 س 5 د', areaEn: 'First floor, weights', areaAr: 'الطابق الأول، الأوزان', agoMin: 125 },
   { level: 'critical', source: 'fire', en: 'Sprinkler zone valve reported closed', ar: 'صمام منطقة الرشاشات مغلق', areaEn: 'Ground floor, zone 1', areaAr: 'الطابق الأرضي، المنطقة 1', agoMin: 37 },
   { level: 'warning', source: 'sensor', en: 'Supply air sensor reads 55 °C, likely a failed probe', ar: 'حساس هواء الإمداد يقرأ 55 درجة، والأرجح أن المجس معطل', areaEn: 'Roof, AHU-02', areaAr: 'السطح، AHU-02', agoMin: 140 },
   { level: 'warning', source: 'power', en: 'Board DB-1 at 88% of its rating during the evening peak', ar: 'اللوحة DB-1 عند 88% من قدرتها وقت ذروة المساء', areaEn: 'First floor, DB-1', areaAr: 'الطابق الأول، DB-1', agoMin: 64 },
   { level: 'warning', source: 'access', en: 'Service door held open for 11 minutes', ar: 'باب الخدمة بقي مفتوحًا 11 دقيقة', areaEn: 'Ground floor, staff area', areaAr: 'الطابق الأرضي، منطقة الموظفين', agoMin: 18 },
-  { level: 'info', source: 'sensor', en: 'CO₂ above 1,100 ppm in the functional area', ar: 'ثاني أكسيد الكربون أعلى من 1,100 جزء في المليون في منطقة التمارين الوظيفية', areaEn: 'First floor, functional', areaAr: 'الطابق الأول، منطقة التمارين الوظيفية', agoMin: 29 },
+  { level: 'info', source: 'sensor', en: 'CO₂ above 1,100 ppm in Studio 1', ar: 'ثاني أكسيد الكربون أعلى من 1,100 جزء في المليون في استوديو 1', areaEn: 'First floor, Studio 1', areaAr: 'الطابق الأول، استوديو 1', agoMin: 29 },
   { level: 'info', source: 'reporting', en: 'Daily energy close has not written any rows yet', ar: 'لم يسجل إقفال الطاقة اليومي أي بيانات بعد', areaEn: 'Network reporting', areaAr: 'تقارير الشبكة', agoMin: 95 },
 ];
 
 const ALERT_POOL: AlertTpl[] = [
-  { level: 'warning', source: 'hvac', en: 'Swimming pool hall humidity above 65%', ar: 'رطوبة صالة المسبح أعلى من 65%', areaEn: 'Ground floor, swimming pool', areaAr: 'الطابق الأرضي، المسبح' },
+  { level: 'warning', source: 'hvac', en: 'Pool humidity above 65%', ar: 'رطوبة المسبح أعلى من 65%', areaEn: 'Ground floor, pool', areaAr: 'الطابق الأرضي، المسبح' },
   { level: 'warning', source: 'hvac', en: 'Chiller 1 short-cycling since 4 PM', ar: 'المبرد 1 يعمل ويتوقف بشكل متكرر منذ 4 م', areaEn: 'Roof, chiller 1', areaAr: 'السطح، المبرد 1' },
-  { level: 'critical', source: 'hvac', en: 'Cardio area 4 °C above its comfort band', ar: 'منطقة الكارديو أعلى من نطاق الراحة بأربع درجات', areaEn: 'First floor, cardio area', areaAr: 'الطابق الأول، منطقة الكارديو' },
-  { level: 'info', source: 'power', en: 'Lighting left on in the functional area overnight', ar: 'إضاءة منطقة التمارين الوظيفية بقيت مضاءة طوال الليل', areaEn: 'First floor, functional', areaAr: 'الطابق الأول، منطقة التمارين الوظيفية' },
+  { level: 'critical', source: 'hvac', en: 'Cardio 4 °C above its comfort band', ar: 'منطقة الكارديو أعلى من نطاق الراحة بأربع درجات', areaEn: 'First floor, cardio', areaAr: 'الطابق الأول، منطقة الكارديو' },
+  { level: 'info', source: 'power', en: 'Lighting left on in Studio 1 overnight', ar: 'إضاءة استوديو 1 بقيت مضاءة طوال الليل', areaEn: 'First floor, Studio 1', areaAr: 'الطابق الأول، استوديو 1' },
   { level: 'info', source: 'access', en: 'Door contact noisy at the west entrance', ar: 'إشارات متذبذبة من حساس باب المدخل الغربي', areaEn: 'Ground floor, west entrance', areaAr: 'الطابق الأرضي، المدخل الغربي' },
-  { level: 'warning', source: 'vision', en: 'Camera offline for 25 minutes', ar: 'كاميرا غير متصلة منذ 25 دقيقة', areaEn: 'Gym area', areaAr: 'صالة التمارين' },
-  { level: 'warning', source: 'sensor', en: 'Locker room extract fan not running', ar: 'مروحة شفط غرف الخزائن متوقفة', areaEn: 'Ground floor, locker rooms', areaAr: 'الطابق الأرضي، غرف الخزائن' },
+  { level: 'warning', source: 'vision', en: 'Camera offline for 25 minutes', ar: 'كاميرا غير متصلة منذ 25 دقيقة', areaEn: 'Weights', areaAr: 'الأوزان' },
+  { level: 'warning', source: 'sensor', en: 'Changing room extract fan not running', ar: 'مروحة شفط غرف الملابس متوقفة', areaEn: 'Ground floor, changing rooms', areaAr: 'الطابق الأرضي، غرف الملابس' },
   { level: 'info', source: 'hvac', en: 'Filter change due on AHU-01 this week', ar: 'موعد تغيير فلتر AHU-01 هذا الأسبوع', areaEn: 'Roof, AHU-01', areaAr: 'السطح، AHU-01' },
 ];
 
@@ -255,7 +255,7 @@ const ACTIVITY_TPL: Record<string, { en: string; ar: string }[]> = {
   'fire-alarm': [{ en: 'Panel healthy, {n} detectors reporting', ar: 'اللوحة سليمة، و{n} كاشفًا يرسل قراءاته' }],
   'fire-fighting': [{ en: 'Sprinkler pressure normal on every floor', ar: 'ضغط الرشاشات طبيعي في جميع الطوابق' }],
 };
-const ACT_AREAS = [['the cardio area', 'منطقة الكارديو'], ['the gym area', 'صالة التمارين'], ['the functional area', 'منطقة التمارين الوظيفية'], ['the locker rooms', 'غرف الخزائن'], ['the swimming pool hall', 'صالة المسبح'], ['the boxing area', 'منطقة الملاكمة'], ['the freestyle area', 'منطقة التمارين الحرة']];
+const ACT_AREAS = [['cardio', 'الكارديو'], ['weights', 'الأوزان'], ['Studio 1', 'استوديو 1'], ['the changing rooms', 'غرف الملابس'], ['the pool', 'المسبح'], ['Studio 2', 'استوديو 2'], ['the open floor', 'المنطقة المفتوحة']];
 /** Training areas held at 22 °C; every other area at 23 °C (same rule as the FM overview normal setpoint). */
 export const TRAINING_KEYS = new Set(['gym', 'cardio', 'functional', 'boxing', 'freestyle', 'performance', 'pt']);
 

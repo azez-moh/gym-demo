@@ -23,7 +23,7 @@ export function BrandLogo({ className = '', height = 22 }: { className?: string;
 export function BrandMark({ compact }: { compact?: boolean }) {
   return (
     <span className="brand" aria-label="Conductor for gyms, powered by Primewave">
-      <BrandLogo height={compact ? 18 : 22} />
+      <BrandLogo height={compact ? 13 : 15} />
     </span>
   );
 }

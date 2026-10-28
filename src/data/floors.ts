@@ -141,28 +141,28 @@ function finish(floor: FloorId) {
 
 /** Ground floor: lounges along the east side, reception by the south-east entrance, locker rooms and spa to the north, the pool hall in the middle. */
 const GROUND: Seed[] = [
-  { key: 'lockers', nameEn: 'Locker rooms', nameAr: 'غرف الخزائن', shortEn: 'Lockers', shortAr: 'الخزائن', points: box(1, 1, 20, 10) },
-  { key: 'spa', nameEn: 'Spa', nameAr: 'السبا', shortEn: 'Spa', shortAr: 'السبا', points: box(21, 1, 32, 10) },
-  { key: 'massage', nameEn: 'Massage area', nameAr: 'منطقة المساج', shortEn: 'Massage', shortAr: 'المساج', points: box(26, 12, 32, 15) },
-  { key: 'pool', nameEn: 'Swimming pool', nameAr: 'المسبح', shortEn: 'Pool', shortAr: 'المسبح', points: box(2, 12, 24, 28), detail: box(4, 14, 22, 26) },
-  { key: 'freestyle', nameEn: 'Freestyle', nameAr: 'منطقة التمارين الحرة', shortEn: 'Freestyle', shortAr: 'الحرة', points: box(2, 30, 22, 37) },
+  { key: 'lockers', nameEn: 'Changing rooms', nameAr: 'غرف الملابس', shortEn: 'Changing', shortAr: 'الملابس', points: box(1, 1, 20, 10) },
+  { key: 'spa', nameEn: 'Sauna', nameAr: 'الساونا', shortEn: 'Sauna', shortAr: 'الساونا', points: box(21, 1, 32, 10) },
+  { key: 'massage', nameEn: 'Massage', nameAr: 'المساج', shortEn: 'Massage', shortAr: 'المساج', points: box(26, 12, 32, 15) },
+  { key: 'pool', nameEn: 'Pool', nameAr: 'المسبح', shortEn: 'Pool', shortAr: 'المسبح', points: box(2, 12, 24, 28), detail: box(4, 14, 22, 26) },
+  { key: 'freestyle', nameEn: 'Open floor', nameAr: 'المنطقة المفتوحة', shortEn: 'Open floor', shortAr: 'المفتوحة', points: box(2, 30, 22, 37) },
   { key: 'prayer', nameEn: 'Prayer room', nameAr: 'المصلى', shortEn: 'Prayer', shortAr: 'المصلى', points: box(24, 30, 32, 37) },
-  { key: 'reception', nameEn: 'Reception and entrance', nameAr: 'الاستقبال والمدخل', shortEn: 'Reception', shortAr: 'الاستقبال', points: box(34, 22, 43, 30) },
-  { key: 'retail', nameEn: 'Retail area', nameAr: 'منطقة البيع', shortEn: 'Retail', shortAr: 'البيع', points: box(34, 9, 43, 14) },
-  { key: 'lounge', nameEn: 'Lounge area', nameAr: 'منطقة الاستراحة', shortEn: 'Lounge', shortAr: 'الاستراحة', points: box(34, 14, 43, 19) },
-  { key: 'smoothie', nameEn: 'Smoothie bar', nameAr: 'ركن العصائر', shortEn: 'Smoothie', shortAr: 'العصائر', points: box(34, 19, 43, 22) },
-  { key: 'atrium', nameEn: 'Atrium lounge', nameAr: 'استراحة البهو', shortEn: 'Atrium', shortAr: 'البهو', points: box(34, 1, 43, 9) },
+  { key: 'reception', nameEn: 'Reception', nameAr: 'الاستقبال', shortEn: 'Reception', shortAr: 'الاستقبال', points: box(34, 22, 43, 30) },
+  { key: 'retail', nameEn: 'Shop', nameAr: 'المتجر', shortEn: 'Shop', shortAr: 'المتجر', points: box(34, 9, 43, 14) },
+  { key: 'lounge', nameEn: 'Lounge', nameAr: 'الاستراحة', shortEn: 'Lounge', shortAr: 'الاستراحة', points: box(34, 14, 43, 19) },
+  { key: 'smoothie', nameEn: 'Café', nameAr: 'المقهى', shortEn: 'Café', shortAr: 'المقهى', points: box(34, 19, 43, 22) },
+  { key: 'atrium', nameEn: 'Seating area', nameAr: 'منطقة الجلوس', shortEn: 'Seating', shortAr: 'الجلوس', points: box(34, 1, 43, 9) },
 ];
 
 /** First floor: training floors to the north, cardio and studios in the middle, a straight sprint track along the south wall. */
 const FIRST: Seed[] = [
-  { key: 'gym', nameEn: 'Gym area', nameAr: 'صالة التمارين', shortEn: 'Gym', shortAr: 'التمارين', points: box(1, 1, 26, 16) },
-  { key: 'functional', nameEn: 'Functional', nameAr: 'منطقة التمارين الوظيفية', shortEn: 'Functional', shortAr: 'الوظيفية', points: box(28, 1, 43, 12) },
-  { key: 'boxing', nameEn: 'Boxing', nameAr: 'منطقة الملاكمة', shortEn: 'Boxing', shortAr: 'الملاكمة', points: box(28, 14, 43, 23) },
-  { key: 'cardio', nameEn: 'Cardio area', nameAr: 'منطقة الكارديو', shortEn: 'Cardio', shortAr: 'الكارديو', points: box(1, 18, 19, 30) },
-  { key: 'pt', nameEn: 'PT zones', nameAr: 'مناطق التدريب الشخصي', shortEn: 'PT', shortAr: 'تدريب شخصي', points: box(21, 18, 26, 30) },
-  { key: 'performance', nameEn: 'Performance zone', nameAr: 'منطقة الأداء', shortEn: 'Perf.', shortAr: 'الأداء', points: box(28, 25, 35, 30) },
-  { key: 'relaxing', nameEn: 'Relaxing room', nameAr: 'غرفة الاسترخاء', shortEn: 'Relaxing', shortAr: 'الاسترخاء', points: box(36, 25, 43, 30) },
+  { key: 'gym', nameEn: 'Weights', nameAr: 'الأوزان', shortEn: 'Weights', shortAr: 'الأوزان', points: box(1, 1, 26, 16) },
+  { key: 'functional', nameEn: 'Studio 1', nameAr: 'استوديو 1', shortEn: 'Studio 1', shortAr: 'استوديو 1', points: box(28, 1, 43, 12) },
+  { key: 'boxing', nameEn: 'Studio 2', nameAr: 'استوديو 2', shortEn: 'Studio 2', shortAr: 'استوديو 2', points: box(28, 14, 43, 23) },
+  { key: 'cardio', nameEn: 'Cardio', nameAr: 'الكارديو', shortEn: 'Cardio', shortAr: 'الكارديو', points: box(1, 18, 19, 30) },
+  { key: 'pt', nameEn: 'Personal training', nameAr: 'التدريب الشخصي', shortEn: 'PT', shortAr: 'تدريب', points: box(21, 18, 26, 30) },
+  { key: 'performance', nameEn: 'Stretching', nameAr: 'الإطالة', shortEn: 'Stretch', shortAr: 'الإطالة', points: box(28, 25, 35, 30) },
+  { key: 'relaxing', nameEn: 'Recovery', nameAr: 'الاستشفاء', shortEn: 'Recovery', shortAr: 'الاستشفاء', points: box(36, 25, 43, 30) },
   { key: 'track', nameEn: 'Running track', nameAr: 'مضمار الجري', shortEn: 'Track', shortAr: 'المضمار', points: box(1, 32, 43, 37) },
 ];
 
