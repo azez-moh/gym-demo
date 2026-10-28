@@ -1,0 +1,42 @@
+.pol-search { width: min(280px, 100%); margin-block-end: var(--sp-3); }
+.pol-table td { vertical-align: middle; }
+.pol-row--hot td:first-child { box-shadow: inset 3px 0 0 var(--warning); }
+[dir='rtl'] .pol-row--hot td:first-child { box-shadow: inset -3px 0 0 var(--warning); }
+.pol-name { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.pol-name__text { color: var(--text); }
+.pol-sub { font-size: var(--fs-xs); color: var(--text-muted); }
+.pol-muted { color: var(--text-muted); }
+.pol-now { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pol-now__v { min-width: 72px; }
+
+.pol-form { gap: var(--sp-5); }
+.pol-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.pol-field .select { width: 100%; }
+.pol-grid2 { display: grid; gap: var(--sp-3); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pol-grid3 { display: grid; gap: var(--sp-3); grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; }
+@media (max-width: 520px) { .pol-grid2, .pol-grid3 { grid-template-columns: minmax(0, 1fr); } }
+.pol-set { display: flex; flex-direction: column; gap: var(--sp-3); border: 0; margin: 0; padding: 0; padding-block-start: var(--sp-4); border-block-start: 1px solid var(--border); min-width: 0; }
+.pol-legend { padding: 0; margin-block-end: var(--sp-3); font-size: var(--fs-sm); color: var(--text); }
+.pol-labeltip { display: inline-flex; align-items: center; gap: 6px; }
+.pol-err { margin: 0; color: var(--danger-fg); font-size: var(--fs-sm); }
+.pol-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); width: 100%; flex-wrap: wrap; }
+.pol-range { display: flex; flex-direction: column; gap: 6px; }
+.pol-range input { width: 100%; accent-color: var(--primary); }
+.pol-doorstats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); }
+.pol-doorstats > div { display: flex; flex-direction: column; gap: 4px; padding: var(--sp-3); background: var(--surface-2); border-radius: var(--r-sm); }
+.pol-doorstats strong { font-size: var(--fs-xl); font-weight: 500; }
+
+/* Camera view: always a dark frame, like a real picture */
+.pol-cam { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--r-sm); direction: ltr; }
+.pol-cam__bg { fill: var(--brand-ink); }
+.pol-cam__floor { fill: var(--brand-white); opacity: 0.07; }
+.pol-cam__door { fill: var(--brand-white); opacity: 0.12; }
+.pol-cam__doorin { fill: var(--brand-ink); opacity: 0.85; }
+.pol-cam__desk { fill: var(--brand-white); opacity: 0.16; }
+.pol-cam__person { fill: var(--brand-white); opacity: 0.45; }
+.pol-cam__line { stroke: var(--pw-cyan); stroke-width: 2.5; stroke-dasharray: 8 5; }
+.pol-cam__handle { fill: var(--pw-cyan); }
+.pol-cam__arrow { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.pol-cam__arrow--in { stroke: var(--success); }
+.pol-cam__arrow--out { stroke: var(--warning); }
+.pol-cam__tag { fill: var(--brand-white); font-size: 12px; font-family: var(--font-body); }
