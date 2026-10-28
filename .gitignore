@@ -4,3 +4,4 @@ dist-single
 qa/**/*.png
 qa/**/tmp
 *.log
+gym-demo.html
