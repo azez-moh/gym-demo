@@ -1,0 +1,144 @@
+/*
+  GYM Demo · motion layer
+  Benchmark: Apple's interface motion. Interactions use real damped springs (sampled into CSS linear() easing),
+  not generic ease curves:
+  - press:  quick spring with a small settle (about 8% of a 4% press, so it reads as a soft bounce, never a wobble)
+  - pop:    menus, sheets and selection markers, a barely visible 2% overshoot
+  - smooth: critically damped, no overshoot, for anything that moves a lot of pixels (drawers, accordions, page entry)
+  Rules: transform and opacity only, press feedback is instant on the way down (90 ms) and springs back on release,
+  hover never lifts cards, and everything turns off under prefers-reduced-motion.
+*/
+
+:root {
+  --spring-press: linear(0, 0.046, 0.1589, 0.3069, 0.4655, 0.6176, 0.7521, 0.8634, 0.9496, 1.0115, 1.0519, 1.0744, 1.0831, 1.0817, 1.0737, 1.062, 1.0489, 1.0359, 1.0241, 1.0142, 1.0063, 1.0005, 0.9966, 0.9942, 0.9932, 0.9931, 0.9936, 0.9945, 0.9956, 0.9967, 0.9977, 0.9986, 0.9993, 0.9998, 1.0002, 1.0004, 1.0006, 1.0006, 1.0006, 1.0005, 1);
+  --spring-pop: linear(0, 0.0384, 0.1311, 0.2511, 0.3797, 0.5045, 0.618, 0.7163, 0.7981, 0.8638, 0.9146, 0.9525, 0.9797, 0.9981, 1.0098, 1.0164, 1.0194, 1.0199, 1.0187, 1.0167, 1.0142, 1.0117, 1.0092, 1.0071, 1.0052, 1.0036, 1.0024, 1.0015, 1.0008, 1.0003, 1, 0.9998, 0.9997, 0.9996, 0.9996, 0.9996, 0.9997, 0.9997, 0.9998, 0.9998, 1);
+  --spring-smooth: linear(0, 0.026, 0.0887, 0.1707, 0.2606, 0.3509, 0.4371, 0.5168, 0.5886, 0.6521, 0.7075, 0.7554, 0.7963, 0.8311, 0.8604, 0.8849, 0.9054, 0.9225, 0.9366, 0.9483, 0.9579, 0.9657, 0.9722, 0.9774, 0.9817, 0.9852, 0.9881, 0.9904, 0.9922, 0.9938, 0.995, 0.996, 0.9968, 0.9974, 0.9979, 0.9983, 0.9987, 0.9989, 0.9991, 0.9993, 1);
+  --ease-out-soft: cubic-bezier(0.25, 0.8, 0.3, 1);
+  --dur-press-in: 90ms;
+  --dur-press-out: 500ms;
+  --dur-pop: 560ms;
+  --dur-smooth: 520ms;
+  --dur-hover: 180ms;
+}
+
+/* ---------- Press: every control dips and springs back ---------- */
+.btn, .chip, .seg__opt, .icon-btn, .lang-btn, .scopesw__btn, .topnav__link, .tab, .toggle,
+.rolepick__opt, .bell__btn, .signin__lang, .mk-wrap {
+  transition:
+    transform var(--dur-press-out) var(--spring-press),
+    background-color var(--dur-hover) var(--ease-out-soft),
+    border-color var(--dur-hover) var(--ease-out-soft),
+    color var(--dur-hover) var(--ease-out-soft),
+    box-shadow var(--dur-hover) var(--ease-out-soft),
+    filter var(--dur-hover) var(--ease-out-soft);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active:not(:disabled), .chip:active:not(:disabled), .seg__opt:active:not(:disabled), .icon-btn:active:not(:disabled),
+.lang-btn:active:not(:disabled), .scopesw__btn:active, .topnav__link:active, .tab:active, .toggle:active:not(:disabled),
+.bell__btn:active, .signin__lang:active {
+  transform: scale(0.96);
+  transition-duration: var(--dur-press-in), var(--dur-hover), var(--dur-hover), var(--dur-hover), var(--dur-hover), var(--dur-hover);
+  transition-timing-function: var(--ease-out-soft);
+}
+.btn--primary:active:not(:disabled) { transform: scale(0.97); filter: brightness(0.96); }
+.btn--sm:active:not(:disabled), .btn--icon:active:not(:disabled) { transform: scale(0.92); }
+
+/* Large targets press less, so they feel heavy rather than squishy */
+:root .kpi--link, :root .rolepick__opt, :root .in-row__head, :root .maplist__row, .scopesw__item, .sidenav__link, .sidenav__grouphead {
+  transition:
+    transform var(--dur-press-out) var(--spring-press),
+    background-color var(--dur-hover) var(--ease-out-soft),
+    border-color var(--dur-hover) var(--ease-out-soft),
+    color var(--dur-hover) var(--ease-out-soft),
+    box-shadow var(--dur-hover) var(--ease-out-soft);
+  -webkit-tap-highlight-color: transparent;
+}
+:root .kpi--link:active, :root .rolepick__opt:active { transform: scale(0.985); transition-duration: var(--dur-press-in); transition-timing-function: var(--ease-out-soft); }
+:root .in-row__head:active, :root .maplist__row:active { transform: scale(0.992); transition-duration: var(--dur-press-in); transition-timing-function: var(--ease-out-soft); }
+.scopesw__item:active, .sidenav__link:active, .sidenav__grouphead:active { transform: scale(0.97); transition-duration: var(--dur-press-in); transition-timing-function: var(--ease-out-soft); }
+
+/* ---------- Selection markers slide in with a soft pop ---------- */
+.tab[aria-selected='true']::after,
+.topnav__link.active::after { transform-origin: center; animation: pw-underline var(--dur-pop) var(--spring-pop) backwards; }
+.sidenav__link.active::before, .scopesw__item.is-current::before { transform-origin: center; animation: pw-marker var(--dur-pop) var(--spring-pop) backwards; }
+@keyframes pw-underline { from { transform: scaleX(0.2); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+@keyframes pw-marker { from { transform: scaleY(0.2); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+
+.seg__opt[aria-checked='true'] { animation: pw-seg var(--dur-pop) var(--spring-pop) backwards; }
+@keyframes pw-seg { from { transform: scale(0.94); } to { transform: scale(1); } }
+
+.chip[aria-pressed='true'], .chip[aria-checked='true'] { animation: pw-seg var(--dur-pop) var(--spring-pop) backwards; }
+
+/* Switch: the knob travels on a spring, the track fades */
+.toggle { transition: transform var(--dur-press-out) var(--spring-press), background-color 260ms var(--ease-out-soft), border-color 260ms var(--ease-out-soft); }
+.toggle__knob { transition: inset-inline-start var(--dur-press-out) var(--spring-press), background-color 260ms var(--ease-out-soft), width 200ms var(--ease-out-soft); }
+.toggle:active:not(:disabled) .toggle__knob { width: 18px; }
+.toggle[aria-checked='true']:active:not(:disabled) .toggle__knob { inset-inline-start: 16px; }
+
+/* Radio dot on the sign-in role cards */
+:root .rolepick__dot { transition: background-color 220ms var(--ease-out-soft), border-color 220ms var(--ease-out-soft), box-shadow 320ms var(--spring-pop); }
+
+/* ---------- Menus and popovers open like a sheet from their anchor ---------- */
+.scopesw__menu:not([hidden]) { transform-origin: top left; animation: pw-menu var(--dur-pop) var(--spring-pop) backwards; }
+[dir='rtl'] .scopesw__menu:not([hidden]) { transform-origin: top right; }
+.bell__menu:not([hidden]) { transform-origin: top right; animation: pw-menu var(--dur-pop) var(--spring-pop) backwards; }
+[dir='rtl'] .bell__menu:not([hidden]) { transform-origin: top left; }
+@keyframes pw-menu {
+  from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+  40% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+.infotip__bubble { transition: opacity 200ms var(--ease-out-soft), transform 420ms var(--spring-pop), visibility 0s linear 200ms; transform: translateY(3px) scale(0.97); }
+.infotip__bubble.is-open { transform: none; transition: opacity 160ms var(--ease-out-soft), transform 420ms var(--spring-pop); }
+
+/* Left menu groups unfold */
+.sidenav__list:not([hidden]) { animation: pw-unfold var(--dur-smooth) var(--spring-smooth) backwards; }
+@keyframes pw-unfold { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.sidenav__grouphead svg { transition: transform 420ms var(--spring-pop); }
+
+/* ---------- Modals, drawers and sheets ---------- */
+.overlay { animation: pw-fade 260ms var(--ease-out-soft) backwards; }
+.panel--modal { animation: pw-modal var(--dur-pop) var(--spring-pop) backwards; }
+.panel--drawer { animation: pw-drawer var(--dur-smooth) var(--spring-smooth) backwards; }
+[dir='rtl'] .panel--drawer { animation-name: pw-drawer-rtl; }
+:root .mapsheet { animation: pw-sheet var(--dur-smooth) var(--spring-smooth) backwards; }
+@keyframes pw-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pw-modal { from { opacity: 0; transform: translateY(12px) scale(0.95); } 35% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes pw-drawer { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes pw-drawer-rtl { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes pw-sheet { from { transform: translateY(100%); } to { transform: none; } }
+
+/* ---------- Accordions (recommended actions) ---------- */
+:root .in-row__panel { transition: grid-template-rows var(--dur-smooth) var(--spring-smooth); }
+:root .in-row__inner { transition: visibility 0s linear var(--dur-smooth); }
+:root .in-row__body, :root .in-row__inner > * { opacity: 0; transform: translateY(-6px); transition: opacity 200ms var(--ease-out-soft), transform 360ms var(--spring-smooth); }
+:root .in-row.is-open .in-row__body, :root .in-row.is-open .in-row__inner > * { opacity: 1; transform: none; transition: opacity 280ms var(--ease-out-soft) 60ms, transform var(--dur-smooth) var(--spring-pop) 40ms; }
+:root .in-row__chev { transition: transform 460ms var(--spring-pop); }
+
+/* ---------- Page entry: content settles in, top to bottom ---------- */
+.shell__content > * { animation: pw-page 460ms var(--spring-smooth) backwards; }
+.shell__content > * > * { animation: pw-rise 520ms var(--spring-smooth) backwards; }
+.shell__content > * > *:nth-child(2) { animation-delay: 40ms; }
+.shell__content > * > *:nth-child(3) { animation-delay: 80ms; }
+.shell__content > * > *:nth-child(4) { animation-delay: 120ms; }
+.shell__content > * > *:nth-child(5) { animation-delay: 150ms; }
+.shell__content > * > *:nth-child(n+6) { animation-delay: 180ms; }
+.grid-kpi > *, .mapkpis > * { animation: pw-rise 520ms var(--spring-smooth) backwards; }
+.grid-kpi > *:nth-child(2), .mapkpis > *:nth-child(2) { animation-delay: 50ms; }
+.grid-kpi > *:nth-child(3), .mapkpis > *:nth-child(3) { animation-delay: 90ms; }
+.grid-kpi > *:nth-child(4) { animation-delay: 120ms; }
+@keyframes pw-page { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pw-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* Sign-in: the card and the claim arrive together */
+:root .signin__card { animation: pw-modal 640ms var(--spring-pop) backwards; animation-delay: 60ms; }
+:root .signin__hero > * { animation: pw-rise 560ms var(--spring-smooth) backwards; }
+.signin__hero > *:nth-child(2) { animation-delay: 60ms; }
+.signin__hero > *:nth-child(3) { animation-delay: 110ms; }
+
+/* Hover is colour only, quick and quiet */
+.btn:hover, .chip:hover, .icon-btn:hover, .sidenav__link:hover, .in-row__head:hover { transition-delay: 0s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transform: none !important; transition-duration: 0.001ms !important; }
+}

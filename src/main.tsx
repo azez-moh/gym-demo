@@ -6,6 +6,7 @@ import './theme/base.css';
 import './components/components.css';
 import './layout/layout.css';
 import './theme/primewave.css';
+import './theme/motion.css';
 
 import { ThemeProvider } from './theme/theme';
 import { I18nProvider } from './i18n';
