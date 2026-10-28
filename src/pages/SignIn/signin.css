@@ -97,3 +97,4 @@
 :root[lang='ar'] .signin__claim, :root[lang='ar'] .signin__title { letter-spacing: 0; font-weight: 700; }
 .rolepick__opt { border-radius: var(--r-card); }
 :root[data-theme='light'] .rolepick__opt.is-on .rolepick__dot { border-color: var(--primary); background: var(--primary); }
+.signin__eyebrow { display: none; }

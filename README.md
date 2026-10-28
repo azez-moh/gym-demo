@@ -1,4 +1,4 @@
-# GYM Demo
+# Conductor for gyms
 
 Gym's Conductor by Primewave: a demo of the gym operations platform for gym-sector prospects, in the Primewave design system (Clash Display, Markazi Text, violet-to-cyan ramp).
 

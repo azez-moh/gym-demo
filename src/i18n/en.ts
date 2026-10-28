@@ -2,8 +2,8 @@
 // Copy rules: no em dash character, plain formal English, no "demo / sample / dummy" wording.
 const en = {
   app: {
-    title: 'GYM Demo',
-    name: 'GYM Demo',
+    title: 'Conductor for gyms',
+    name: 'Conductor for gyms',
     product: "Gym's Conductor",
     poweredBy: 'Powered by Primewave',
   },

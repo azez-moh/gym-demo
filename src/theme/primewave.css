@@ -83,6 +83,8 @@ input, select, textarea, .select, .field__input { border-radius: var(--r-md); }
 .pw-lockup__mark { height: calc(var(--lockup-h, 22px) * 1.55); width: auto; display: block; }
 .pw-lockup__text { display: flex; flex-direction: column; line-height: 1; gap: calc(var(--lockup-h, 22px) * 0.18); }
 .pw-lockup__name { font-family: 'Clash Display', system-ui, sans-serif; font-weight: 600; font-size: var(--lockup-h, 22px); color: var(--text); white-space: nowrap; letter-spacing: 0; }
+.pw-lockup__for { font-style: italic; font-weight: 400; font-synthesis: style; }
+:root[lang='ar'] .pw-lockup__name { font-family: 'Clash Display', system-ui, sans-serif; letter-spacing: 0; }
 .pw-lockup__by { font-family: 'Clash Display', system-ui, sans-serif; font-weight: 400; font-size: max(9px, calc(var(--lockup-h, 22px) * 0.42)); color: var(--text-faint); white-space: nowrap; }
 :root[lang='ar'] .pw-lockup__by { font-family: var(--font-body); font-size: max(11px, calc(var(--lockup-h, 22px) * 0.5)); }
 .topbar__brand .pw-lockup { --lockup-h: 17px; }

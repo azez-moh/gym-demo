@@ -3,8 +3,8 @@ import type { Dict } from './en';
 // Shell strings (Arabic). Contextual terminology, minimal diacritics, "معتمد" (never "معمد").
 const ar: Dict = {
   app: {
-    title: 'GYM Demo',
-    name: 'GYM Demo',
+    title: 'كوندكتور للصالات الرياضية',
+    name: 'Conductor for gyms',
     product: 'مركز العمليات',
     poweredBy: 'مدعوم من Primewave',
   },
