@@ -1,0 +1,99 @@
+.signin {
+  min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
+  padding: var(--sp-6) var(--gutter); background: var(--bg); color: var(--text); position: relative; overflow-x: hidden;
+}
+/* faint vertical hairlines on the GYM Demo site grid */
+.signin::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(to right, var(--border) 1px, transparent 1px);
+  background-size: calc(100% / 6) 100%; opacity: 0.7;
+}
+.signin__tools { position: relative; z-index: 1; display: flex; justify-content: flex-end; align-items: center; gap: var(--sp-3); }
+.signin__lang {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 12px; border: 1px solid var(--border-strong); background: var(--bg); color: var(--text); font-size: var(--fs-sm);
+}
+.signin__lang:hover { border-color: var(--hairline-strong); }
+.signin__lang svg { width: 15px; height: 15px; color: var(--text-muted); }
+
+.signin__main {
+  position: relative; z-index: 1; flex: 1; width: 100%; max-width: 1200px; margin-inline: auto;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: var(--sp-12); align-items: center; padding-block: var(--sp-8);
+}
+.signin__hero { display: flex; flex-direction: column; gap: var(--sp-10); min-width: 0; }
+.signin__brand { display: flex; flex-direction: column; gap: var(--sp-4); }
+.signin__eyebrow { font-size: var(--label-size); letter-spacing: var(--label-tracking); text-transform: uppercase; color: var(--text-muted); }
+:root[lang='ar'] .signin__eyebrow { text-transform: none; font-size: var(--fs-sm); }
+.signin__claim { margin: 0; display: flex; flex-direction: column; font-family: var(--font-display); font-weight: 400; font-size: clamp(2.25rem, 4.6vw, 4.25rem); line-height: 1.08; }
+.signin__claim-b { padding-inline-start: 1.6em; }
+.signin__body { margin: 0; max-width: 520px; color: var(--text-muted); font-size: var(--fs-md); line-height: 1.6; }
+
+.signin__card {
+  width: 100%; background: var(--surface); border: 1px solid var(--border-strong);
+  padding: var(--sp-10); display: flex; flex-direction: column; gap: var(--sp-6);
+}
+.signin__head { display: flex; flex-direction: column; gap: 8px; }
+.signin__title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--fs-3xl); line-height: 1.1; }
+.signin__lead { margin: 0; color: var(--text-muted); }
+.signin__field { display: flex; flex-direction: column; gap: 8px; }
+.signin__label { font-size: var(--label-size); letter-spacing: var(--label-tracking); text-transform: uppercase; color: var(--text-muted); }
+:root[lang='ar'] .signin__label { text-transform: none; font-size: var(--fs-sm); }
+.signin__inputwrap { position: relative; display: flex; align-items: center; }
+.signin__inputwrap svg { position: absolute; inset-inline-start: 14px; width: 16px; height: 16px; color: var(--text-muted); pointer-events: none; }
+.signin__input {
+  width: 100%; height: 46px; padding: 0 14px; padding-inline-start: 40px; border: 1px solid var(--border-strong); border-radius: 0;
+  background: var(--bg); color: var(--text); font-size: var(--fs-md); font-family: var(--font-body);
+}
+:root[dir='rtl'] .signin__input { text-align: right; padding-left: 14px; padding-right: 40px; }
+.signin__input:focus-visible { box-shadow: var(--focus-ring); }
+.signin__submit { height: 46px; width: 100%; font-size: var(--fs-md); }
+.signin__submit svg { width: 18px; height: 18px; }
+:root[dir='rtl'] .signin__submit svg { transform: scaleX(-1); }
+.signin__note { margin: 0; font-size: var(--fs-xs); color: var(--text-faint); }
+.signin__foot { position: relative; z-index: 1; max-width: 1200px; width: 100%; margin-inline: auto; font-size: var(--fs-xs); color: var(--text-faint); }
+
+.rolepick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); }
+.rolepick__opt {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 16px; min-height: 118px;
+  border: 1px solid var(--border-strong); background: transparent; color: var(--text); text-align: start;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.rolepick__opt:hover { border-color: var(--hairline-strong); }
+.rolepick__opt.is-on { border-color: var(--primary); background: var(--primary-soft); }
+:root[data-theme='light'] .rolepick__opt.is-on { border-color: var(--text); }
+.rolepick__head { display: flex; align-items: center; gap: 10px; }
+.rolepick__dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--border-strong); flex-shrink: 0; position: relative; }
+.rolepick__opt.is-on .rolepick__dot { border-color: var(--primary); background: var(--primary); box-shadow: inset 0 0 0 3px var(--surface); }
+:root[data-theme='light'] .rolepick__opt.is-on .rolepick__dot { border-color: var(--text); background: var(--text); }
+.rolepick__name { font-size: var(--fs-lg); line-height: 1.25; }
+.rolepick__other { font-size: var(--fs-xs); color: var(--text-faint); }
+.rolepick__desc { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.45; }
+
+@media (max-width: 960px) {
+  .signin__main { grid-template-columns: minmax(0, 1fr); gap: var(--sp-8); align-items: start; padding-block: var(--sp-6); }
+  .signin__hero { gap: var(--sp-6); }
+  .signin__body { display: none; }
+  .signin__claim { font-size: 2.25rem; }
+  .signin__card { max-width: 520px; }
+}
+@media (max-width: 480px) {
+  .signin { padding-block: var(--sp-4); }
+  .signin__card { padding: var(--sp-6) var(--sp-5); gap: var(--sp-5); }
+  .signin__title { font-size: var(--fs-2xl); }
+  .signin__claim { font-size: 2rem; }
+  .signin__claim-b { padding-inline-start: 1.2em; }
+  .rolepick { grid-template-columns: minmax(0, 1fr); }
+  .rolepick__opt { min-height: 0; }
+}
+
+/* ---------- Primewave layer ---------- */
+.signin::before { display: none; }
+.signin__card { border-radius: var(--r-panel, 18px); border-color: transparent; box-shadow: var(--shadow-2); }
+:root[data-theme='dark'] .signin__card { border-color: var(--border); box-shadow: none; }
+.signin__lang { border-radius: var(--r-md); }
+.signin__input { border-radius: var(--r-md); }
+.signin__claim, .signin__title { font-weight: 600; letter-spacing: -0.01em; }
+.signin__claim-b { background: var(--pw-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:root[lang='ar'] .signin__claim, :root[lang='ar'] .signin__title { letter-spacing: 0; font-weight: 700; }
+.rolepick__opt { border-radius: var(--r-card); }
+:root[data-theme='light'] .rolepick__opt.is-on .rolepick__dot { border-color: var(--primary); background: var(--primary); }

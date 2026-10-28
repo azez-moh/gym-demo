@@ -1,0 +1,91 @@
+/* Shared styles for Machines and Devices, Reports, Usage Report and Library Management (prefix mr-). */
+.mr-small { font-size: var(--fs-xs); }
+.mr-sub { display: block; font-size: var(--fs-xs); color: var(--text-faint); margin-block-start: 2px; }
+.mr-muted-cell { color: var(--text-muted); }
+
+/* header chips */
+.mr-headchip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--border); background: var(--surface); font-size: var(--fs-sm); color: var(--text-muted); white-space: nowrap; }
+.mr-headchip strong { color: var(--text); font-weight: 400; }
+.mr-headchip__sep { width: 1px; height: 14px; background: var(--border-strong); }
+.mr-refreshed { font-size: var(--fs-xs); color: var(--text-faint); }
+
+.mr-intro { color: var(--text-muted); font-size: var(--fs-sm); max-width: 820px; }
+
+/* expand button */
+.mr-expand { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; padding: 0; border: 1px solid transparent; background: none; color: var(--text-muted); flex-shrink: 0; }
+.mr-expand:hover { border-color: var(--border); color: var(--text); }
+.mr-expand svg { width: 16px; height: 16px; transition: transform 0.18s var(--ease); }
+.mr-expand svg.is-open { transform: rotate(90deg); }
+[dir='rtl'] .mr-expand svg.is-open { transform: scaleX(-1) rotate(90deg); }
+
+.mr-machinecell { display: flex; align-items: flex-start; gap: 8px; min-width: 190px; }
+.mr-machinecell__text { min-width: 0; }
+
+/* rename */
+.mr-name { display: inline-flex; align-items: center; gap: 6px; }
+.mr-name__text { color: var(--text); }
+.mr-name__edit { display: inline-flex; padding: 3px; border: 1px solid transparent; background: none; color: var(--text-faint); }
+.mr-name__edit:hover, .mr-name__edit:focus-visible { color: var(--text); border-color: var(--border); }
+.mr-name__edit svg { width: 13px; height: 13px; }
+.mr-rename { display: flex; flex-direction: column; gap: 4px; }
+.mr-rename__row { display: flex; gap: 4px; align-items: center; }
+.mr-rename__input { height: 30px; width: 180px; }
+.mr-rename__err { color: var(--danger-fg); font-size: var(--fs-xs); }
+
+/* zone chips */
+.mr-zones { display: flex; flex-wrap: wrap; gap: 4px; max-width: 420px; }
+.mr-zone { display: inline-flex; gap: 6px; align-items: baseline; padding: 2px 8px; border: 1px solid var(--border); background: var(--surface-2); font-size: var(--fs-xs); white-space: nowrap; }
+.mr-zone__cam { color: var(--text-faint); }
+.mr-zone__code { color: var(--text-faint); font-family: var(--font-mono); font-size: 0.7rem; }
+
+/* inline panel */
+.mr-panel { display: grid; gap: var(--sp-4); grid-template-columns: minmax(0, 1fr); padding: var(--sp-2) 0; }
+@media (min-width: 900px) { .mr-panel { grid-template-columns: minmax(0, 340px) minmax(0, 1fr); align-items: start; } }
+.mr-panel__figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.mr-fig { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: var(--surface); }
+.mr-fig__label { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-xs); color: var(--text-muted); }
+.mr-fig__value { font-family: var(--font-display); font-size: var(--fs-xl); line-height: 1.1; }
+.mr-panel__chart { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.mr-panel__charthead { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.mr-panel__floor { justify-self: start; text-decoration: none !important; }
+@media (min-width: 900px) { .mr-panel__floor { grid-column: 1 / -1; } }
+.mr-hours { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 2px; height: 110px; align-items: end; direction: ltr; }
+[dir='rtl'] .mr-hours { direction: rtl; }
+.mr-hours__col { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; padding-block-end: 16px; }
+.mr-hours__col.is-closed { background: repeating-linear-gradient(135deg, transparent 0 4px, var(--surface-2) 4px 6px); }
+.mr-hours__col.is-future .mr-hours__bar { opacity: 0.35; }
+.mr-hours__bar { display: block; width: 100%; min-height: 0; }
+.mr-hours__lbl { position: absolute; inset-block-end: 0; inset-inline-start: 0; font-size: 10px; color: var(--text-faint); }
+
+/* fill bar */
+.mr-fill { display: inline-flex; align-items: center; gap: 8px; min-width: 150px; }
+.mr-fill__track { position: relative; width: 64px; height: 6px; background: var(--surface-3); flex-shrink: 0; }
+.mr-fill__bar { position: absolute; inset-block: 0; inset-inline-start: 0; }
+.mr-fill__bar--accent { background: var(--primary); }
+.mr-fill__bar--muted { background: var(--text-faint); }
+.mr-fill__text { white-space: nowrap; font-size: var(--fs-sm); }
+
+/* highlight strip (COO equipment view) */
+.mr-highlights { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .mr-highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mr-hl { display: flex; flex-direction: column; gap: 8px; padding: var(--sp-4); background: var(--surface); min-width: 0; }
+.mr-hl__head { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: var(--fs-sm); }
+.mr-hl__head svg { width: 16px; height: 16px; }
+.mr-hl__list { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.mr-hl__item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: baseline; }
+.mr-hl__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mr-hl__val { color: var(--text-muted); font-size: var(--fs-sm); white-space: nowrap; }
+
+/* thumbnails */
+.mr-thumb { display: block; width: 100%; aspect-ratio: 10 / 7; object-fit: contain; background: var(--surface-2); }
+.mr-thumb--icon { display: flex; align-items: center; justify-content: center; color: var(--text-faint); }
+.mr-thumb--icon svg { width: 28px; height: 28px; }
+
+/* tables in cards keep their own scroll on phones */
+.mr-tablewrap { min-width: 0; }
+.mr-tablewrap .dt__scroll { max-width: 100%; }
+
+.mr-filterbar { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: flex-end; }
+.mr-filterbar .select { min-width: 170px; }
+.mr-check { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-sm); color: var(--text-muted); cursor: pointer; user-select: none; min-height: 36px; }
+:root[data-theme='light'] .mr-fill__bar--accent { background: #7c3aed; }

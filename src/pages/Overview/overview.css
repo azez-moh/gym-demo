@@ -1,0 +1,161 @@
+/* Overview (network-wide view) and Branches page styles. Scoped with ov- / br- prefixes. */
+
+.ov-head { display: flex; flex-direction: column; gap: var(--sp-2); }
+.ov-asat { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; font-size: var(--fs-sm); color: var(--text-muted); }
+.ov-card-title { font-family: var(--font-display); font-weight: 400; font-size: var(--fs-xl); line-height: 1.15; }
+:root[lang='ar'] .ov-card-title { font-family: var(--font-body); font-weight: 700; font-size: var(--fs-lg); }
+
+/* brand tag */
+
+/* KPI accents */
+.ov-kpis .kpi { min-height: 150px; }
+.ov-crit { color: var(--danger-fg); }
+.ov-crit-text { color: var(--danger-fg); }
+.ov-kpi-alert.is-crit { border-color: color-mix(in srgb, var(--danger) 55%, transparent); }
+.ov-of { font-size: 0.55em; color: var(--text-faint); }
+.ov-slot { font-size: 0.8em; white-space: nowrap; }
+.ov-sar-hint { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: var(--fs-sm); color: var(--text-muted); }
+.ov-sar-hint svg { width: 14px; height: 14px; color: var(--primary-text); }
+.ov-sar-hint strong { color: var(--primary-text); font-weight: 400; font-size: var(--fs-md); }
+.ov-kpi-energy { border-color: var(--primary-line); }
+
+/* markers */
+.ov-mark { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; font-size: 11px; color: var(--text-muted); border: 1px solid var(--border); white-space: nowrap; }
+.ov-mark--hi { color: var(--primary-text); border-color: var(--primary-line); }
+.ov-mark--warn { color: var(--danger-fg); border-color: color-mix(in srgb, var(--danger) 50%, transparent); }
+
+/* ---------- Ranking ---------- */
+.ov-rank .card__head { flex-wrap: wrap; }
+.ov-rank .card__titles { flex: 0 0 auto; }
+.ov-rank .card__actions { flex: 1 1 360px; display: flex; justify-content: flex-end; min-width: 0; }
+.ov-rank__metrics { max-width: 100%; }
+.ov-rank__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.ov-rank__row {
+  display: grid; align-items: center; gap: 12px;
+  grid-template-columns: 26px minmax(250px, 1.5fr) minmax(120px, 1.6fr) 92px 64px 64px 128px max-content;
+  padding: 8px 0; border-block-start: 1px solid var(--border);
+}
+.ov-rank__row:first-child { border-block-start: 0; }
+.ov-rank__pos { color: var(--text-faint); font-size: var(--fs-xs); }
+.ov-rank__name { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; background: none; border: 0; padding: 4px 0; color: var(--text); text-align: start; font-size: var(--fs-md); cursor: pointer; }
+.ov-rank__name:hover .ov-rank__nametext { text-decoration: underline; text-underline-offset: 3px; }
+.ov-rank__nametext { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ov-rank__bar { position: relative; height: 6px; background: var(--surface-3); }
+.ov-rank__fill { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--chart-3); animation: ov-grow 0.9s var(--ease) both; }
+.ov-rank__fill.is-hi { background: var(--primary); }
+.ov-rank__row.is-top .ov-rank__val { color: var(--text); }
+.ov-rank__val { text-align: end; font-size: var(--fs-md); white-space: nowrap; }
+.ov-rank__sub { color: var(--text-faint); font-size: var(--fs-xs); white-space: nowrap; }
+.ov-rank__status { display: flex; justify-content: flex-end; }
+.ov-rank__act { display: flex; justify-content: flex-end; }
+.ov-rank__open { white-space: nowrap; }
+.ov-rank__open svg { width: 14px; height: 14px; }
+.ov-rank__current { font-size: var(--fs-xs); color: var(--text-faint); white-space: nowrap; }
+@keyframes ov-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@media (max-width: 1240px) {
+  .ov-rank__row { grid-template-columns: 26px minmax(220px, 1.4fr) minmax(80px, 1.2fr) 84px 64px 64px 128px; }
+  .ov-rank__act { grid-column: 2 / -1; justify-content: flex-start; display: none; }
+}
+@media (max-width: 760px) {
+  .ov-rank__row {
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    grid-template-areas: 'pos name val' '. bar bar' '. meta meta';
+    row-gap: 6px; padding: 10px 0;
+  }
+  .ov-rank__pos { grid-area: pos; }
+  .ov-rank__name { grid-area: name; justify-content: flex-start; }
+  .ov-rank__val { grid-area: val; }
+  .ov-rank__bar { grid-area: bar; }
+  .ov-rank__sub, .ov-rank__mark, .ov-rank__status { grid-area: meta; }
+  .ov-rank__sub { justify-self: start; }
+  .ov-rank__mark { justify-self: center; }
+  .ov-rank__status { justify-self: end; }
+  .ov-rank .card__actions { flex-basis: 100%; justify-content: flex-start; }
+}
+
+/* ---------- details ---------- */
+.ov-details { display: flex; flex-direction: column; gap: var(--sp-5); scroll-margin-top: 80px; }
+.ov-panel { min-width: 0; }
+.ov-grid-2 { display: grid; gap: var(--sp-4); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1100px) { .ov-grid-2 { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } }
+
+/* heatmap tweaks */
+.ov-heat__row { background: none; border: 0; color: var(--text-muted); cursor: pointer; text-align: start; min-width: 0; padding: 0 8px 0 0; }
+[dir='rtl'] .ov-heat__row { padding: 0 0 0 8px; }
+.ov-heat__row:hover { color: var(--text); }
+.ov-heat__rowname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ov-heat .heatmap__cell { height: 26px; cursor: pointer; }
+
+/* horizontal bars */
+.ov-hbars { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.ov-hbars__row {
+  display: grid; grid-template-columns: minmax(150px, 1.1fr) minmax(60px, 1.3fr) 72px 64px; align-items: center; gap: 12px;
+  inline-size: 100%; padding: 7px 0; background: none; border: 0; color: var(--text); text-align: start; font-size: var(--fs-sm);
+}
+button.ov-hbars__row { cursor: pointer; }
+button.ov-hbars__row:hover .ov-hbars__name { text-decoration: underline; text-underline-offset: 3px; }
+.ov-hbars__label { min-width: 0; }
+.ov-hbars__name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ov-hbars__track { position: relative; height: 6px; background: var(--surface-3); }
+.ov-hbars__fill { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--chart-3); animation: ov-grow 0.8s var(--ease) both; }
+[dir='rtl'] .ov-hbars__fill, [dir='rtl'] .ov-rank__fill { transform-origin: right; }
+[dir='ltr'] .ov-hbars__fill { transform-origin: left; }
+.ov-hbars__fill.is-hi { background: var(--primary); }
+.ov-hbars__val { text-align: end; white-space: nowrap; }
+.ov-hbars__tag { display: flex; justify-content: flex-end; }
+@media (max-width: 600px) {
+  .ov-hbars__row { grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: 'label val tag' 'track track track'; row-gap: 6px; }
+  .ov-hbars__label { grid-area: label; }
+  .ov-hbars__track { grid-area: track; }
+  .ov-hbars__val { grid-area: val; }
+  .ov-hbars__tag { grid-area: tag; }
+}
+
+/* savings hero */
+.ov-savings {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-6); flex-wrap: wrap;
+  padding: var(--sp-6); border: 1px solid var(--primary-line); background: linear-gradient(120deg, var(--primary-soft), transparent 70%), var(--surface);
+}
+.ov-savings__main { display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
+.ov-savings__label { display: flex; align-items: center; gap: 8px; }
+.ov-savings__label > svg { width: 16px; height: 16px; color: var(--primary-text); }
+.ov-savings__value { display: flex; align-items: baseline; gap: 10px; color: var(--primary-text); }
+.ov-savings__num { font-family: var(--font-display); font-size: clamp(2.75rem, 7vw, 4.5rem); line-height: 1; }
+:root[lang='ar'] .ov-savings__num { font-family: var(--font-num); }
+.ov-savings__cur { font-size: var(--fs-xl); color: var(--text-muted); }
+.ov-savings__meta { display: flex; flex-wrap: wrap; gap: 4px 8px; font-size: var(--fs-sm); color: var(--text-muted); }
+.ov-savings__spark { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.ov-savings__spark .sparkline, .ov-savings__spark svg { width: 220px; height: 56px; }
+.ov-savings__sparklabel { font-size: var(--fs-xs); color: var(--text-faint); }
+@media (max-width: 600px) { .ov-savings { padding: var(--sp-4); } .ov-savings__spark { align-items: flex-start; } .ov-savings__spark svg { width: 100%; max-width: 300px; } }
+
+/* alert list */
+.ov-alerts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.ov-alerts li + li { border-block-start: 1px solid var(--border); }
+.ov-alerts__row {
+  display: grid; grid-template-columns: 120px minmax(140px, 220px) minmax(0, 1fr) 16px; gap: 12px; align-items: center;
+  inline-size: 100%; padding: 12px 4px; background: none; border: 0; color: var(--text); text-align: start; cursor: pointer;
+}
+.ov-alerts__row:hover { background: var(--surface-2); }
+.ov-alerts__club { font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ov-alerts__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ov-alerts__title { font-size: var(--fs-md); }
+.ov-alerts__meta { font-size: var(--fs-xs); color: var(--text-faint); }
+.ov-alerts__chev { width: 16px; height: 16px; color: var(--text-faint); }
+@media (max-width: 700px) {
+  .ov-alerts__row { grid-template-columns: auto minmax(0, 1fr) 16px; grid-template-areas: 'lvl club chev' 'text text text'; row-gap: 6px; }
+  .ov-alerts__lvl { grid-area: lvl; } .ov-alerts__club { grid-area: club; } .ov-alerts__text { grid-area: text; } .ov-alerts__chev { grid-area: chev; }
+}
+
+@media (max-width: 640px) {
+  .ov-head .page-head__actions { inline-size: 100%; }
+  .ov-head .seg { inline-size: 100%; }
+  .ov-head .seg__opt { flex: 1; padding: 0 8px; }
+  .grid-kpi.ov-kpis, .ov-panel .grid-kpi { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-2); }
+  .ov-kpis .kpi, .ov-panel .kpi { min-height: 0; padding: var(--sp-3); }
+  .ov-kpis .kpi__value, .ov-panel .kpi__value { font-size: 1.75rem; }
+  .ov-kpis .kpi__icon, .ov-panel .kpi__icon { display: none; }
+  .ov-kpis .kpi__foot, .ov-panel .kpi__foot { font-size: var(--fs-xs); }
+  .ov-kpis .kpi__spark, .ov-panel .kpi__spark { display: none; }
+}

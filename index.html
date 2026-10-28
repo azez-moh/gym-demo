@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>GYM Demo</title>
+    <script>
+      // Apply saved theme (dark by default, the brand look) and language before first paint.
+      (function () {
+        var d = document.documentElement;
+        try {
+          var t = localStorage.getItem('gym.theme');
+          var l = localStorage.getItem('opt.lang');
+          d.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+          if (l === 'ar') { d.lang = 'ar'; d.dir = 'rtl'; }
+        } catch (e) { d.setAttribute('data-theme', 'light'); }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

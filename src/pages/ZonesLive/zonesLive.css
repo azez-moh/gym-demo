@@ -1,0 +1,6 @@
+.zl__camhead { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.zl__updated { font-size: var(--fs-sm); }
+.zl__row--on td:first-child { box-shadow: inset 2px 0 0 var(--primary); }
+[dir='rtl'] .zl__row--on td:first-child { box-shadow: inset -2px 0 0 var(--primary); }
+.zl__thr { position: absolute; inset-block: -2px; width: 1px; background: var(--text-muted); }
+.vis-bar:has(.zl__thr) { overflow: visible; }

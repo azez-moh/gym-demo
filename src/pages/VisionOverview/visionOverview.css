@@ -1,0 +1,109 @@
+/* AI Vision overview: wall-screen layout like AI Agents. From 1200 px wide the page fits the viewport below the
+   top bar with no page scroll and no inner scrollbars; lists show what fits plus "+X more". */
+
+.vo-wall {
+  --vo-gap: 12px;
+  --vo-fs-xs: clamp(12px, 0.15vw + 10px, 13.5px);
+  --vo-fs-sm: clamp(13px, 0.2vw + 10.4px, 15px);
+  display: flex; flex-direction: column; gap: var(--vo-gap);
+}
+
+.vo-head { display: flex; align-items: center; gap: 10px; min-width: 0; flex-wrap: wrap; }
+.vo-head__title { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 0.9vw + 13px, 34px); line-height: 1.05; margin: 0; }
+.vo-head__where { font-size: var(--vo-fs-sm); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+.vo-kpis { gap: var(--vo-gap); }
+
+.vo-main { display: grid; gap: var(--vo-gap); grid-template-columns: minmax(0, 1fr); min-height: 0; }
+@media (min-width: 900px) { .vo-main { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .vo-col--heat { grid-column: 1 / -1; } }
+.vo-col { display: flex; flex-direction: column; gap: var(--vo-gap); min-width: 0; min-height: 0; }
+
+.vo-wall .card { display: flex; flex-direction: column; min-height: 0; min-width: 0; padding: 14px 16px; }
+.vo-wall .card__head { margin-block-end: 10px; align-items: center; }
+.vo-wall .card__body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.vo-ct { display: inline-flex; align-items: center; gap: 8px; }
+.vo-ct svg { width: 16px; height: 16px; color: var(--text-muted); }
+.vo-faint { color: var(--text-faint); font-size: var(--vo-fs-xs); }
+.vo-count { font-size: var(--vo-fs-xs); color: var(--text-muted); }
+.vo-more { font-size: var(--vo-fs-xs); color: var(--text-muted); min-height: 1.4em; line-height: 1.4; flex-shrink: 0; }
+.vo-fitlist { list-style: none; margin: 0; padding: 0; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+.vo-fitlist > .is-cut { visibility: hidden; }
+
+/* crowd heatmap card: plans on top, busiest areas and legend below in two columns */
+.vo-heat { height: 100%; }
+.vo-wall .hmc__body { display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; }
+.vo-wall .hmc__plans { justify-content: center; min-height: 0; flex: 1 1 auto; }
+.vo-wall .hmc__side { flex-shrink: 0; }
+.vo-wall .hmc .hm-svgwrap { max-width: none; }
+.vo-wall .hmc__side { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 4px 16px; align-items: start; }
+.vo-wall .hmc__side > .hmc__label:nth-of-type(1) { grid-column: 1; grid-row: 1; }
+.vo-wall .hmc__side > .hmc__list { grid-column: 1; grid-row: 2 / span 2; }
+.vo-wall .hmc__side > .hmc__label:nth-of-type(2) { grid-column: 2; grid-row: 1; }
+.vo-wall .hmc__side > .hmc__legend { grid-column: 2; grid-row: 2; }
+.vo-wall .hmc__side > .hmc__foot { grid-column: 2; grid-row: 3; }
+.vo-wall .hmc__list li { padding: 5px 0; font-size: var(--vo-fs-xs); }
+.vo-wall .hmc .empty-state, .vo-wall .hmc .empty { margin: auto; }
+
+/* machine use per family */
+.vo-fam li { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 48px; align-items: center; gap: 10px; padding: 5px 0; border-block-end: 1px solid var(--border); font-size: var(--vo-fs-sm); flex-shrink: 0; }
+.vo-fam__name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-fam__track { height: 6px; background: var(--surface-3); position: relative; }
+.vo-fam__track > span { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--text-muted); }
+.vo-fam li:first-child .vo-fam__track > span { background: var(--primary); }
+.vo-fam__val { text-align: end; }
+.vo-ml { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; flex-shrink: 0; border-block-start: 1px solid var(--border-strong); padding-block-start: 10px; }
+.vo-ml > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.vo-ml__name { font-size: var(--vo-fs-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* cameras and detection */
+.vo-health { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; }
+.vo-health > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.vo-health dt { font-size: var(--vo-fs-xs); color: var(--text-muted); }
+.vo-health dd { margin: 0; font-size: var(--vo-fs-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* vision alerts */
+.vo-alerts li { flex-shrink: 0; border-block-end: 1px solid var(--border); }
+.vo-alert { display: grid; grid-template-columns: 16px minmax(0, 1fr) 14px; gap: 10px; align-items: center; padding: 7px 0; color: inherit; text-decoration: none; }
+a.vo-alert:hover .vo-alert__title { text-decoration: underline; text-underline-offset: 3px; }
+.vo-alert__icon { width: 16px; height: 16px; }
+.vo-alert__icon.is-crit { color: var(--danger-fg); }
+.vo-alert__icon.is-warn { color: var(--warning-fg); }
+.vo-alert__text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.vo-alert__title { font-size: var(--vo-fs-sm); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-alert__go { width: 14px; height: 14px; color: var(--text-faint); }
+
+/* quick links */
+.vo-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; flex-shrink: 0; }
+.vo-link { display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); text-decoration: none; font-size: var(--vo-fs-sm); min-width: 0; }
+.vo-link:hover { border-color: var(--text-muted); }
+.vo-link > svg:first-child { width: 15px; height: 15px; color: var(--text-muted); flex-shrink: 0; }
+.vo-link span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-link__go { width: 14px; height: 14px; color: var(--text-faint); flex-shrink: 0; }
+
+/* lists scroll free below 1200 px: cap their height so the page stays compact */
+.vo-fam, .vo-alerts { max-height: 340px; }
+
+/* ---------- Wall screen: from 1200 px wide everything fits one view ---------- */
+@media (min-width: 1200px) {
+  .shell__content:has(.vo-wall) { max-width: none; padding-block: 16px; }
+  .vo-wall { height: calc(100vh - var(--topbar-h) - 32px); height: calc(100dvh - var(--topbar-h) - 32px); overflow: hidden; }
+  .vo-wall > * { flex-shrink: 0; }
+  .vo-main { flex: 1 1 0; flex-shrink: 1; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr); }
+  .vo-col--heat { grid-column: auto; }
+  .vo-col { height: 100%; }
+  .vo-col > .card { flex-shrink: 0; }
+  .vo-col > .vo-card--grow, .vo-col--heat > .card { flex: 1 1 0; }
+  .vo-fam, .vo-alerts { max-height: none; flex: 1 1 0; }
+  .vo-wall .hmc__plans { flex: 1 1 0; min-height: 0; }
+  .vo-wall .hmc .hm-svgwrap { aspect-ratio: auto; height: 100%; }
+  .vo-wall .kpi { padding-block: 12px; }
+}
+
+/* Sidebar shown (from 1024px): menu rows shrink with the screen height so the sidebar never scrolls on this page. */
+@media (min-width: 1024px) {
+  .shell:has(.vo-wall) .sidenav { gap: 8px; padding-block: 8px; }
+  .shell:has(.vo-wall) .sidenav__group { padding-block-start: 6px; }
+  .shell:has(.vo-wall) .sidenav__grouphead { height: 26px; }
+  .shell:has(.vo-wall) .sidenav__link { height: clamp(24px, calc((100dvh - var(--topbar-h) - 210px) / 25), 36px); }
+  .shell:has(.vo-wall) .sidenav__link.active::before { inset-block: 4px; }
+}

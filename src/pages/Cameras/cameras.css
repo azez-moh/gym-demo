@@ -1,0 +1,17 @@
+.camwall { display: grid; gap: var(--sp-3); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) { .camwall { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .camwall { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.camtile { position: relative; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); cursor: grab; min-width: 0; }
+.camtile .camf { border: 0; }
+.camtile.is-dragging { opacity: 0.45; }
+.camtile.is-over { outline: 2px solid var(--primary); outline-offset: -2px; }
+:root[data-theme='light'] .camtile.is-over { outline-color: var(--text); }
+.camtile__drop { position: absolute; inset: 0 0 auto 0; aspect-ratio: 16 / 9; display: grid; place-items: center; background: rgba(124, 58, 237, 0.18); pointer-events: none; }
+.camtile__drop span { background: #7c3aed; color: #241f30; padding: 4px 10px; font-size: var(--fs-sm); }
+.camtile__bar { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 10px; min-height: 42px; border-block-start: 1px solid var(--border); }
+[dir='rtl'] .camtile__bar { padding: 6px 10px 6px 6px; }
+.camtile__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--danger); flex-shrink: 0; }
+.camtile__dot.is-on { background: var(--success); }
+.camtile__name { flex: 1; min-width: 0; font-size: var(--fs-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.camtile__actions { display: inline-flex; gap: 2px; flex-shrink: 0; }
+.camlarge__hint { margin-inline-end: auto; font-size: var(--fs-sm); }

@@ -1,0 +1,211 @@
+/*
+  GYM Demo · Primewave design tokens
+  Source: Primewave design system (tokens.json): violet #7c3aed to cyan #21c3d6 ramp through #7042eb, #535ae6, #3b86df,
+  warm lilac-grey paper #ecebf0, white cards (radius 14, no border, soft violet shadow), ink ladder #241f30 to #b9b4c4,
+  dark ground #0e0b18 with white overlays. Fonts: Clash Display (Latin), Markazi Text (Arabic).
+  Light is the default theme (the brand's native look). Status colours stay separate from the brand.
+  Token names are unchanged from the original kit so every component and page ports 1:1; chart values live in chartTokens.ts.
+*/
+
+:root,
+:root[data-theme='light'],
+.theme-scope[data-theme='light'] {
+  color-scheme: light;
+
+  --pw-violet: #7c3aed;
+  --pw-violet-2: #7042eb;
+  --pw-indigo: #535ae6;
+  --pw-blue: #3b86df;
+  --pw-cyan: #21c3d6;
+  --pw-gradient: linear-gradient(90deg, #7c3aed 0%, #7042eb 42%, #535ae6 62%, #3b86df 80%, #21c3d6 100%);
+  --pw-gradient-135: linear-gradient(135deg, #7c3aed 0%, #7042eb 42%, #535ae6 62%, #3b86df 80%, #21c3d6 100%);
+
+  --brand-ink: #241f30;
+  --brand-yellow: #7c3aed; /* legacy name kept for ported components: now the Primewave violet */
+  --brand-white: #ffffff;
+
+  --bg: #ecebf0;
+  --surface: #ffffff;
+  --surface-2: #fbfaff;
+  --surface-3: #f1eef9;
+  --surface-sunken: #e4e2ea;
+  --border: #e7e3f2;
+  --border-strong: #dcd8e6;
+  --hairline-strong: #241f30;
+
+  --text: #241f30;
+  --text-muted: #4a4657;
+  --text-faint: #6a6577;
+
+  --primary: #7c3aed;
+  --primary-hover: #7042eb;
+  --primary-contrast: #ffffff;
+  --primary-text: #6d28d9;
+  --primary-soft: rgba(124, 58, 237, 0.08);
+  --primary-line: rgba(124, 58, 237, 0.32);
+  --logo-fill: #241f30;
+
+  --success: #2f8f62;
+  --success-fg: #1f6b48;
+  --success-bg: #e2f3ea;
+  --warning: #d98a1a;
+  --warning-fg: #8a5208;
+  --warning-bg: #fdf0da;
+  --danger: #e5484d;
+  --danger-fg: #b4282d;
+  --danger-bg: #fde6e7;
+  --info: #3b86df;
+  --info-fg: #1f5fae;
+  --info-bg: #e5effc;
+  --neutral-fg: #4a4657;
+  --neutral-bg: #f1eef9;
+
+  --chart-1: #7c3aed;
+  --chart-2: #0e8fae;
+  --chart-3: #241f30;
+  --chart-4: #b9b4c4;
+  --chart-5: #3b86df;
+  --chart-6: #d98a1a;
+  --chart-grid: #eeecf4;
+  --chart-axis: #6a6577;
+  --chart-baseline: #dcd8e6;
+  --seq-0: #f3f0fb;
+  --seq-1: #e2d8fc;
+  --seq-2: #cbb8f9;
+  --seq-3: #ae92f5;
+  --seq-4: #9168f0;
+  --seq-5: #7c3aed;
+  --seq-6: #5b24c2;
+  --seq-7: #3b1886;
+
+  --shadow-1: 0 12px 30px -22px rgba(60, 40, 110, 0.5);
+  --shadow-2: 0 16px 40px -24px rgba(70, 40, 130, 0.55);
+  --shadow-3: 0 28px 70px -28px rgba(60, 40, 110, 0.6);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px #7c3aed;
+  --focus: #7c3aed;
+  --overlay: rgba(14, 11, 24, 0.42);
+}
+
+:root[data-theme='dark'],
+.theme-scope[data-theme='dark'] {
+  color-scheme: dark;
+
+  --brand-yellow: #8b5cf6;
+
+  --bg: #0e0b18;
+  --surface: #151024;
+  --surface-2: #1c1830;
+  --surface-3: #2a2536;
+  --surface-sunken: #0b0913;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --hairline-strong: #ffffff;
+
+  --text: #ffffff;
+  --text-muted: #c7c2d6;
+  --text-faint: #9891ad;
+
+  --primary: #8b5cf6;
+  --primary-hover: #9d74f8;
+  --primary-contrast: #ffffff;
+  --primary-text: #b9a2ff;
+  --primary-soft: rgba(139, 92, 246, 0.14);
+  --primary-line: rgba(139, 92, 246, 0.4);
+  --logo-fill: #ffffff;
+
+  --success: #3aa874;
+  --success-fg: #7fd4a7;
+  --success-bg: rgba(58, 168, 116, 0.16);
+  --warning: #f5a623;
+  --warning-fg: #f7c46d;
+  --warning-bg: rgba(245, 166, 35, 0.15);
+  --danger: #e5484d;
+  --danger-fg: #f59597;
+  --danger-bg: rgba(229, 72, 77, 0.17);
+  --info: #3b86df;
+  --info-fg: #8fbcf1;
+  --info-bg: rgba(59, 134, 223, 0.16);
+  --neutral-fg: #c7c2d6;
+  --neutral-bg: rgba(255, 255, 255, 0.06);
+
+  --chart-1: #8b5cf6;
+  --chart-2: #21c3d6;
+  --chart-3: #e9e6f2;
+  --chart-4: #6a6577;
+  --chart-5: #3b86df;
+  --chart-6: #f5a623;
+  --chart-grid: rgba(255, 255, 255, 0.07);
+  --chart-axis: rgba(255, 255, 255, 0.55);
+  --chart-baseline: rgba(255, 255, 255, 0.2);
+  --seq-0: #1c1830;
+  --seq-1: #271d4a;
+  --seq-2: #352470;
+  --seq-3: #462d96;
+  --seq-4: #5a39bb;
+  --seq-5: #7042eb;
+  --seq-6: #9b7af2;
+  --seq-7: #c9b6fb;
+
+  --shadow-1: none;
+  --shadow-2: 0 16px 40px -16px rgba(0, 0, 0, 0.7);
+  --shadow-3: 0 28px 70px -20px rgba(0, 0, 0, 0.8);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px #9d74f8;
+  --focus: #9d74f8;
+  --overlay: rgba(5, 4, 10, 0.7);
+}
+
+/* Typography, radii, spacing */
+:root {
+  --font-display: 'Clash Display', system-ui, sans-serif;
+  --font-body: 'Clash Display', system-ui, sans-serif;
+  --font-num: 'Clash Display', system-ui, sans-serif;
+  --font-arabic: 'Markazi Text', 'Clash Display', serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --fs-xs: 0.75rem;   /* 12 */
+  --fs-sm: 0.8125rem; /* 13 */
+  --fs-md: 0.9375rem; /* 15 */
+  --fs-lg: 1.125rem;  /* 18 */
+  --fs-xl: 1.375rem;  /* 22 */
+  --fs-2xl: 1.75rem;  /* 28 */
+  --fs-3xl: 2.25rem;  /* 36 */
+  --lh-tight: 1.15;
+  --lh-body: 1.5;
+  --fw-display: 600;
+
+  --r-xs: 8px;
+  --r-sm: 9px;
+  --r-md: 11px;
+  --r-card: 14px;
+  --r-lg: 18px;
+  --r-pill: 22px;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+
+  --gutter: 16px;
+  --content-max: 1440px;
+  --topbar-h: 60px;
+  --sidebar-w: 248px;
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --label-size: 11px;
+  --label-tracking: 0.04em;
+}
+
+@media (min-width: 768px) { :root { --gutter: 24px; } }
+@media (min-width: 1200px) { :root { --gutter: 32px; } }
+
+:root[lang='ar'] {
+  --font-display: 'Markazi Text', 'Clash Display', serif;
+  --font-body: 'Markazi Text', 'Clash Display', serif;
+  --font-num: 'Clash Display', system-ui, sans-serif;
+  --lh-body: 1.7;
+  --label-tracking: 0;
+}

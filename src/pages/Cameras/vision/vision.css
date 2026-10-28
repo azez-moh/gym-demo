@@ -1,0 +1,102 @@
+/* AI Vision shared styles (Monitor, Cameras, Camera List, Zones, Zones Live Readings). */
+
+/* ---------- Camera frame ---------- */
+.camf {
+  --cam-wall: #2b302f;
+  --cam-window: #3c4442;
+  --cam-floor-far: #3a3f3d;
+  --cam-floor-near: #545a57;
+  --cam-grid: rgba(255, 255, 255, 0.08);
+  --cam-belt: #1d2120;
+  --cam-machine: #707874;
+  --cam-machine-edge: #262b29;
+  --cam-person: #c9b9a6;
+  --cam-person-head: #8a7563;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  background: #1b1f1e;
+  border: 1px solid var(--border);
+  user-select: none;
+  filter: saturate(0.85);
+}
+.camf__svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.camf__person { transition: transform 1.9s linear; }
+.camf__detect { stroke: rgba(124, 58, 237, 0.75); stroke-width: 1px; transition: transform 1.9s linear; }
+.camf__zone { fill: rgba(255, 255, 255, 0.06); stroke: rgba(255, 255, 255, 0.7); stroke-width: 1px; stroke-dasharray: 4 3; cursor: pointer; }
+.camf__zone.is-active { fill: rgba(124, 58, 237, 0.16); stroke: #7c3aed; stroke-dasharray: none; }
+.camf__zone.is-off { stroke: rgba(255, 255, 255, 0.35); }
+.camf__zone.is-selected { fill: rgba(124, 58, 237, 0.3); stroke: #7c3aed; stroke-width: 2px; stroke-dasharray: none; }
+.camf__drawing polygon { fill: rgba(124, 58, 237, 0.18); stroke: #7c3aed; stroke-width: 2px; }
+.camf__drawing circle { fill: #7c3aed; }
+.camf__drawing--op polygon { fill: rgba(111, 200, 151, 0.18); stroke: #6fc897; stroke-dasharray: 4 3; }
+.camf__drawing--op circle { fill: #6fc897; }
+.camf--draw { cursor: crosshair; }
+.camf--draw .camf__zone { pointer-events: none; opacity: 0.5; }
+
+.camf__label {
+  position: absolute; transform: translateY(calc(-100% - 2px)); padding: 2px 6px; font-size: 11px; line-height: 1.3;
+  background: rgba(2, 12, 10, 0.86); color: #fff; white-space: nowrap; pointer-events: none; max-width: 46%; overflow: hidden; text-overflow: ellipsis;
+}
+.camf__label.is-active { box-shadow: inset 2px 0 0 #7c3aed; }
+.camf__label.is-selected { background: #7c3aed; color: #241f30; }
+[dir='rtl'] .camf__label.is-active { box-shadow: inset -2px 0 0 #7c3aed; }
+
+.camf__blurchip, .camf__watermark {
+  position: absolute; display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; font-size: 11px; line-height: 1.2;
+  background: rgba(2, 12, 10, 0.82); color: #fff; pointer-events: none; white-space: nowrap;
+}
+.camf__blurchip { inset-block-end: 10px; inset-inline-start: 10px; }
+.camf__blurchip svg { width: 12px; height: 12px; }
+.camf__watermark { inset-block-end: 10px; inset-inline-end: 10px; font-family: var(--font-num); max-width: calc(100% - 20px); overflow: hidden; text-overflow: ellipsis; }
+.camf--compact .camf__blurchip { display: none; }
+.camf--compact .camf__watermark { font-size: 10px; padding: 2px 6px; inset-block-end: 6px; inset-inline-end: 6px; }
+
+.camf--offline { display: grid; place-items: center; background: var(--surface-sunken); filter: none; }
+.camf__nosignal { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; padding: var(--sp-4); color: var(--text-muted); max-width: 340px; }
+.camf__nosignal svg { width: 28px; height: 28px; color: var(--danger-fg); }
+.camf__nosignal strong { color: var(--text); font-weight: 400; font-size: var(--fs-md); }
+.camf__nosignal span { font-size: var(--fs-sm); }
+.camf--compact .camf__nosignal strong { font-size: var(--fs-sm); }
+.camf--compact .camf__nosignal svg { width: 22px; height: 22px; }
+
+/* ---------- Stream address ---------- */
+.stream { position: relative; display: inline-flex; align-items: center; gap: 4px; min-width: 0; max-width: 100%; }
+.stream .label { margin-inline-end: 6px; }
+.stream__url { font-family: var(--font-mono); font-size: 12px; padding: 3px 8px; background: var(--surface-sunken); border: 1px solid var(--border); color: var(--text-muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- Forms ---------- */
+.vform { display: flex; flex-direction: column; gap: var(--sp-4); }
+.vform__field { display: flex; flex-direction: column; gap: 6px; }
+.vform__field .select { width: 100%; }
+.vform__err { color: var(--danger-fg); font-size: var(--fs-sm); margin: -8px 0 0; }
+.vform__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+@media (max-width: 520px) { .vform__grid { grid-template-columns: minmax(0, 1fr); } }
+.vform__group { display: flex; flex-direction: column; gap: var(--sp-4); padding-block-start: var(--sp-2); }
+.vform__group-title { margin: 0; font-size: var(--fs-md); font-weight: 400; display: flex; align-items: center; gap: 8px; }
+.vform__lab { display: inline-flex; align-items: center; gap: 4px; }
+.vform__hint { font-size: var(--fs-sm); color: var(--text-muted); margin: 0; }
+
+/* ---------- Page bits ---------- */
+.vis-lede { margin: -12px 0 0; color: var(--text-muted); font-size: var(--fs-sm); }
+.vis-kpis { display: grid; gap: var(--sp-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1100px) { .vis-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.vis-kpis--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1100px) { .vis-kpis--2 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.vis-toast { position: fixed; inset-block-end: 24px; inset-inline-start: 50%; transform: translateX(-50%); z-index: 60; background: var(--text); color: var(--bg); padding: 10px 16px; font-size: var(--fs-sm); }
+[dir='rtl'] .vis-toast { transform: translateX(50%); }
+.vis-chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border: 1px solid var(--border); font-size: var(--fs-sm); color: var(--text-muted); white-space: nowrap; }
+.vis-chip svg { width: 14px; height: 14px; }
+.vis-chip--on { color: var(--text); }
+.vis-code { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); direction: ltr; unicode-bidi: isolate; }
+.vis-name { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.vis-bar { position: relative; height: 4px; background: var(--surface-3); overflow: hidden; }
+.vis-bar > span { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--text-faint); }
+.vis-bar.is-on > span { background: var(--primary); }
+:root[data-theme='light'] .vis-bar.is-on > span { background: var(--text); }
+.vis-motion { display: flex; align-items: center; gap: 10px; min-width: 140px; }
+.vis-motion .vis-bar { flex: 1; min-width: 60px; }
+.vis-motion .num { width: 48px; text-align: end; }
+.camf__label[data-below] { transform: translateY(2px); }
+@media (max-width: 640px) { .camf__label:not(.is-selected) { display: none; } }

@@ -1,0 +1,102 @@
+/*
+  Primewave layer for GYM Demo. Loaded after the component kit and the layout so the GYM Demo structure stays intact
+  and only the look changes: lilac paper, white cards with radius 14 and a soft violet shadow (no border in light),
+  rounded controls, Clash Display throughout, Markazi Text for Arabic, the violet-to-cyan ramp only on the
+  primary action, active markers and the brand lockup.
+*/
+
+@font-face { font-family: 'Clash Display'; src: url('../assets/fonts/ClashDisplay-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Clash Display'; src: url('../assets/fonts/ClashDisplay-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Clash Display'; src: url('../assets/fonts/ClashDisplay-Semibold.otf') format('opentype'); font-weight: 600 700; font-display: swap; }
+@font-face { font-family: 'Markazi Text'; src: url('../assets/fonts/Markazi.ttf') format('truetype'); font-weight: 400 700; font-display: swap; }
+
+/* Markazi runs small against Latin faces: scale the Arabic type steps up */
+:root[lang='ar'] {
+  --fs-xs: 0.875rem;
+  --fs-sm: 0.9375rem;
+  --fs-md: 1.0625rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 1.9rem;
+  --fs-3xl: 2.4rem;
+}
+:root[lang='ar'] .num, :root[lang='ar'] .kpi__value, :root[lang='ar'] .kpi__value .num { font-family: var(--font-num) !important; }
+
+/* Headings: Clash Semibold */
+h1, h2, .page-head__title { font-weight: 600; letter-spacing: -0.01em; }
+:root[lang='ar'] h1, :root[lang='ar'] h2, :root[lang='ar'] .page-head__title { letter-spacing: 0; font-weight: 700; }
+.card__title, .section-head__title, h3, h4 { font-weight: 500; }
+.kpi__value, .kpi__value .num { font-weight: 500; }
+.display { font-weight: 600; }
+
+/* ---------- Cards ---------- */
+.card { border-radius: var(--r-card); border-color: transparent; box-shadow: var(--shadow-1); }
+:root[data-theme='dark'] .card { border-color: var(--border); box-shadow: none; }
+.card--sunken { box-shadow: none; border-color: var(--border); }
+.card--accent { border-color: var(--primary-line); box-shadow: none; }
+.kpi__icon { border-radius: var(--r-sm); border: 0; background: var(--pw-gradient-135); color: #fff; }
+.kpi__icon svg { stroke: #fff; }
+.kpi--link:hover { border-color: var(--primary-line); }
+
+/* ---------- Small parts ---------- */
+.badge, .delta { border-radius: var(--r-xs); }
+.chip { border-radius: var(--r-pill); }
+.chip[aria-pressed='true'], .chip[aria-checked='true'] { border-color: var(--primary); color: var(--primary-text); background: var(--primary-soft); }
+.chip__count, .tab__count { border-radius: 999px; }
+.seg { border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.seg__opt[aria-checked='true'] { background: var(--primary); color: #fff; }
+.toggle { border-radius: 999px; }
+.toggle__knob { border-radius: 999px; }
+:root[data-theme='light'] .toggle[aria-checked='true'] .toggle__knob { background: var(--primary); }
+
+/* Active markers use the brand violet in both themes */
+:root[data-theme='light'] .tab[aria-selected='true']::after,
+:root[data-theme='light'] .topnav__link.active::after,
+:root[data-theme='light'] .scopesw__item.is-current::before,
+:root[data-theme='light'] .sidenav__link.active::before { background: var(--primary); }
+.tab[aria-selected='true']::after, .topnav__link.active::after { background: var(--pw-gradient); border-radius: 2px; }
+.sidenav__link { border-radius: var(--r-md); }
+.sidenav__link.active { background: var(--primary-soft); color: var(--primary-text); }
+:root[data-theme='dark'] .sidenav__link.active { color: #fff; }
+
+/* ---------- Buttons ---------- */
+.btn { border-radius: var(--r-md); }
+.btn--primary { background: var(--pw-gradient) !important; color: #fff !important; border-color: transparent !important; }
+.btn--primary:hover:not(:disabled) { filter: brightness(1.06); }
+.btn--primary:active:not(:disabled) { transform: scale(0.985); }
+.icon-btn, .lang-btn { border-radius: var(--r-md); }
+
+/* ---------- Inputs, menus, overlays ---------- */
+input, select, textarea, .select, .field__input { border-radius: var(--r-md); }
+.select { overflow: hidden; }
+.bell__menu, .scopesw__menu { border-radius: var(--r-card); overflow: hidden; }
+.panel--modal { border-radius: var(--r-lg); overflow: hidden; }
+.panel__title { font-weight: 600; }
+.scopesw__btn { border-radius: var(--r-md); }
+
+/* ---------- Shell ---------- */
+.topbar { background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: none; }
+:root[data-theme='light'] .shell__side, :root[data-theme='light'] .sidenav { background: var(--bg); }
+
+/* ---------- Brand lockup ---------- */
+.pw-lockup { display: inline-flex; align-items: center; gap: calc(var(--lockup-h, 22px) * 0.45); flex-shrink: 0; }
+.pw-lockup__mark { height: calc(var(--lockup-h, 22px) * 1.55); width: auto; display: block; }
+.pw-lockup__text { display: flex; flex-direction: column; line-height: 1; gap: calc(var(--lockup-h, 22px) * 0.18); }
+.pw-lockup__name { font-family: 'Clash Display', system-ui, sans-serif; font-weight: 600; font-size: var(--lockup-h, 22px); color: var(--text); white-space: nowrap; letter-spacing: 0; }
+.pw-lockup__by { font-family: 'Clash Display', system-ui, sans-serif; font-weight: 400; font-size: max(9px, calc(var(--lockup-h, 22px) * 0.42)); color: var(--text-faint); white-space: nowrap; }
+:root[lang='ar'] .pw-lockup__by { font-family: var(--font-body); font-size: max(11px, calc(var(--lockup-h, 22px) * 0.5)); }
+.topbar__brand .pw-lockup { --lockup-h: 17px; }
+@media (max-width: 640px) { .topbar__brand .pw-lockup__by { display: none; } }
+
+/* Background orbs, the system's only background treatment (fixed, behind everything, light theme only) */
+:root[data-theme='light'] body::before,
+:root[data-theme='light'] body::after {
+  content: ''; position: fixed; z-index: -1; pointer-events: none; border-radius: 50%; width: 60vmax; height: 60vmax;
+}
+:root[data-theme='light'] body::before { inset-block-start: -30vmax; inset-inline-start: -22vmax; background: radial-gradient(closest-side, rgba(150, 120, 240, 0.22), transparent); }
+:root[data-theme='light'] body::after { inset-block-end: -32vmax; inset-inline-end: -24vmax; background: radial-gradient(closest-side, rgba(70, 200, 215, 0.18), transparent); }
+:root[data-theme='dark'] body::before {
+  content: ''; position: fixed; z-index: -1; pointer-events: none; border-radius: 50%; width: 60vmax; height: 60vmax;
+  inset-block-start: -32vmax; inset-inline-start: -24vmax; background: radial-gradient(closest-side, rgba(124, 58, 237, 0.22), transparent);
+}
+body { background: var(--bg); isolation: isolate; }

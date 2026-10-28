@@ -1,0 +1,58 @@
+// Page strings for "zonesLive". Keys resolve as t('zonesLive.<key>'). Only the agent that owns this page edits this file.
+export const en = {
+  title: 'Zones Live Readings',
+  lede: 'What the watcher is reading, live: motion and baseline change per zone, for setting each threshold.',
+  liveEvery: 'Live · every 2 s',
+  updated: 'Updated {time}',
+  col: {
+    zone: 'Zone',
+    state: 'State',
+    motion: 'Motion',
+    baseline: 'Baseline change',
+    threshold: 'Threshold',
+  },
+  online: 'Online · {fps} frames per second',
+  offline: 'Offline',
+  noZones: 'No zones on this camera',
+  noReadings: 'No readings while the camera is offline.',
+  aboveThreshold: 'Above the motion threshold',
+  kpi: {
+    inUse: 'Zones in use',
+    inUseInfo: 'Zones whose machine reads In use at this moment.',
+    zones: 'Zones read',
+    zonesInfo: 'Zones the watcher reads every 2 seconds on cameras that are online.',
+    offline: 'Cameras offline',
+    offlineInfo: 'Cameras sending no picture, so their zones have no reading.',
+    peak: 'Highest motion',
+    peakInfo: 'The strongest movement in any zone.',
+  },
+};
+
+export const ar: typeof en = {
+  title: 'قراءات المناطق المباشرة',
+  lede: 'ما يقرؤه نظام الرصد مباشرة: الحركة والتغير عن الصورة المرجعية لكل منطقة، لضبط حد كل منطقة.',
+  liveEvery: 'مباشر · كل ثانيتين',
+  updated: 'آخر تحديث {time}',
+  col: {
+    zone: 'المنطقة',
+    state: 'الحالة',
+    motion: 'الحركة',
+    baseline: 'التغير عن المرجع',
+    threshold: 'الحد',
+  },
+  online: 'متصلة · {fps} إطارات في الثانية',
+  offline: 'غير متصلة',
+  noZones: 'لا توجد مناطق في هذه الكاميرا',
+  noReadings: 'لا توجد قراءات أثناء انقطاع الكاميرا.',
+  aboveThreshold: 'أعلى من حد الحركة',
+  kpi: {
+    inUse: 'مناطق قيد الاستخدام',
+    inUseInfo: 'المناطق التي يظهر جهازها قيد الاستخدام في هذه اللحظة.',
+    zones: 'المناطق المقروءة',
+    zonesInfo: 'المناطق التي يقرؤها نظام الرصد كل ثانيتين في الكاميرات المتصلة.',
+    offline: 'كاميرات غير متصلة',
+    offlineInfo: 'كاميرات لا ترسل صورة، فلا توجد قراءات لمناطقها.',
+    peak: 'أعلى حركة',
+    peakInfo: 'أقوى حركة في أي منطقة.',
+  },
+};
